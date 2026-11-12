@@ -36,8 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.chibidolls.app.core.designsystem.PrimaryBrand
+import com.chibidolls.app.core.designsystem.PastelPinkDeep
 import com.chibidolls.app.core.designsystem.PrimaryDeep
 import com.chibidolls.app.core.designsystem.PrimarySoft
 import com.chibidolls.app.core.model.CatalogItem
@@ -64,24 +65,24 @@ fun ItemGridPanel(
             .clip(panelShape)
             .background(PrimarySoft)
     ) {
-        // Horizontal Category Tabs
+        // Category Tabs with Icons
         CategoryTabsBar(
             categories = categories,
             selectedCategoryId = selectedCategoryId,
             onCategorySelected = onCategorySelected
         )
 
-        // Item Grid (3 columns on standard phone)
+        // 4-Column Item Grid
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            contentPadding = PaddingValues(bottom = 20.dp, top = 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+                .padding(horizontal = 12.dp),
+            contentPadding = PaddingValues(bottom = 16.dp, top = 2.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // "None" option if optional category
+            // "None" / Bỏ chọn slot for optional categories
             if (!isCategoryRequired) {
                 item {
                     val isNoneSelected = equippedItemId == null
@@ -97,13 +98,13 @@ fun ItemGridPanel(
                             Icon(
                                 imageVector = Icons.Default.Block,
                                 contentDescription = "None",
-                                tint = if (isNoneSelected) PrimaryDeep else Color.LightGray,
-                                modifier = Modifier.size(28.dp)
+                                tint = if (isNoneSelected) PastelPinkDeep else Color.LightGray,
+                                modifier = Modifier.size(24.dp)
                             )
                             Text(
                                 text = "None",
-                                fontSize = 11.sp,
-                                color = if (isNoneSelected) PrimaryDeep else Color.Gray,
+                                fontSize = 10.sp,
+                                color = if (isNoneSelected) PastelPinkDeep else Color.Gray,
                                 fontWeight = FontWeight.Medium
                             )
                         }
@@ -111,7 +112,7 @@ fun ItemGridPanel(
                 }
             }
 
-            // Catalog Items
+            // Items in selected category
             items(items, key = { it.id }) { item ->
                 val isSelected = item.id == equippedItemId
                 val context = LocalContext.current
@@ -125,34 +126,37 @@ fun ItemGridPanel(
                         AsyncImage(
                             model = ImageRequest.Builder(context)
                                 .data("file:///android_asset/$imagePath")
+                                .memoryCachePolicy(CachePolicy.ENABLED)
+                                .diskCachePolicy(CachePolicy.ENABLED)
                                 .crossfade(true)
                                 .build(),
                             contentDescription = item.name,
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(6.dp)
+                                .padding(4.dp)
                         )
 
-                        // Fallback Text if image not ready yet
+                        // Name label
                         Text(
                             text = item.name,
-                            fontSize = 10.sp,
+                            fontSize = 9.sp,
+                            maxLines = 1,
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Medium,
                             color = Color(0xFF334155),
                             modifier = Modifier
-                                .padding(4.dp)
+                                .padding(2.dp)
                                 .align(Alignment.BottomCenter)
                         )
 
-                        // Premium Lock Badge
+                        // VIP Lock Badge
                         if (item.isPremium) {
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.TopEnd)
-                                    .padding(4.dp)
-                                    .size(18.dp)
+                                    .padding(3.dp)
+                                    .size(16.dp)
                                     .clip(CircleShape)
                                     .background(Color(0xFFFBBF24)),
                                 contentAlignment = Alignment.Center
@@ -161,27 +165,27 @@ fun ItemGridPanel(
                                     imageVector = Icons.Default.Lock,
                                     contentDescription = "VIP",
                                     tint = Color.White,
-                                    modifier = Modifier.size(11.dp)
+                                    modifier = Modifier.size(10.dp)
                                 )
                             }
                         }
 
-                        // Equipped Indicator
+                        // Equipped Checkmark Badge
                         if (isSelected) {
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.TopStart)
-                                    .padding(4.dp)
-                                    .size(18.dp)
+                                    .padding(3.dp)
+                                    .size(16.dp)
                                     .clip(CircleShape)
-                                    .background(PrimaryBrand),
+                                    .background(PastelPinkDeep),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Check,
                                     contentDescription = "Selected",
                                     tint = Color.White,
-                                    modifier = Modifier.size(12.dp)
+                                    modifier = Modifier.size(10.dp)
                                 )
                             }
                         }
@@ -198,7 +202,7 @@ private fun ItemCard(
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    val cardShape = RoundedCornerShape(18.dp)
+    val cardShape = RoundedCornerShape(16.dp)
     Box(
         modifier = Modifier
             .aspectRatio(1f)
@@ -207,7 +211,7 @@ private fun ItemCard(
             .background(Color.White)
             .border(
                 width = if (isSelected) 2.5.dp else 1.dp,
-                color = if (isSelected) PrimaryBrand else Color(0xFFE2E8F0),
+                color = if (isSelected) PastelPinkDeep else Color(0xFFE2E8F0),
                 shape = cardShape
             )
             .clickable(onClick = onClick)

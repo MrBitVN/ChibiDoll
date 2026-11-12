@@ -57,7 +57,7 @@ fun CharacterEditorScreen(
     viewModel: CharacterEditorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var dollNameInput by remember(uiState.character.name) { mutableStateOf(uiState.character.name) }
+    var dollNameInput by remember { mutableStateOf("My Chibi Doll") }
 
     LaunchedEffect(uiState.isSavedSuccess) {
         if (uiState.isSavedSuccess) {
@@ -85,22 +85,24 @@ fun CharacterEditorScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Top Bar with Action Buttons
+            // Top Bar: Back (cam, trên trái) | Group: Reset, Random, Đổi màu, OK (xanh lá, trên phải)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .padding(horizontal = 14.dp, vertical = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Back Button
+                // Back Button: Orange color on top left
                 CuteActionButton(
                     icon = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    onClick = onBackClick
+                    onClick = onBackClick,
+                    backgroundColor = DiceOrange, // Orange background
+                    iconTint = Color.White
                 )
 
-                // Action group: Reset, Random, Color Tint, Green OK
+                // Actions Group on the right: Reset, Random, Color Tint, Green OK
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -126,8 +128,9 @@ fun CharacterEditorScreen(
                         iconTint = ColorPalettePink
                     )
 
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(modifier = Modifier.width(2.dp))
 
+                    // OK Button: Green on top right
                     GreenOkButton(
                         text = "OK",
                         onClick = { viewModel.showSaveDialog(true) }
@@ -135,46 +138,49 @@ fun CharacterEditorScreen(
                 }
             }
 
-            // Upper Doll Preview Area (~58-60% height)
+            // Upper Stage: Changeable background + Chibi Doll PNG layer stack (~60% height)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                    .padding(horizontal = 20.dp, vertical = 6.dp),
                 contentAlignment = Alignment.Center
             ) {
                 DollCanvasView(
-                    character = uiState.character,
+                    characterState = uiState.characterState,
+                    catalogItems = uiState.allCatalogItems,
+                    backgroundPattern = uiState.backgroundPattern,
+                    onCycleBackground = { viewModel.cycleBackground() },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
 
-            // Lower Section: Light Blue Rounded Panel (~40% height)
-            val currentSlot = uiState.character.slots[uiState.selectedCategoryId]
+            // Lower Section: Light Blue Rounded Panel with Category Tabs & 4-column Item Grid
+            val equippedItemId = uiState.characterState.getEquippedItemId(uiState.selectedCategoryId)
             ItemGridPanel(
                 categories = uiState.categories,
                 selectedCategoryId = uiState.selectedCategoryId,
                 items = uiState.itemsForSelectedCategory,
-                equippedItemId = currentSlot?.itemId,
+                equippedItemId = equippedItemId,
                 onCategorySelected = { viewModel.selectCategory(it) },
                 onItemEquip = { viewModel.equipItem(it) },
                 onItemUnequip = { viewModel.unequipSlot(uiState.selectedCategoryId) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp)
+                    .height(310.dp)
             )
         }
 
-        // Color Picker Floating Sheet
+        // Color Picker Floating Bottom Sheet
         AnimatedVisibility(
             visible = uiState.showColorPicker,
             enter = slideInVertically { it },
             exit = slideOutVertically { it },
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
-            val currentCategorySlot = uiState.character.slots[uiState.selectedCategoryId]
+            val currentColor = uiState.characterState.getColorOverride(uiState.selectedCategoryId)
             ColorTintSheet(
-                currentColorHex = currentCategorySlot?.tintColorHex,
+                currentColor = currentColor,
                 onColorSelected = { viewModel.setTintColor(it) },
                 onClose = { viewModel.toggleColorPicker(false) }
             )

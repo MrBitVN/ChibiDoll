@@ -1,14 +1,16 @@
 package com.chibidolls.app.features.editor
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chibidolls.app.core.logic.CharacterLogicHelper
 import com.chibidolls.app.core.model.CatalogItem
+import com.chibidolls.app.core.model.CatalogResponse
 import com.chibidolls.app.core.model.Category
-import com.chibidolls.app.core.model.Character
-import com.chibidolls.app.core.model.OutfitSlot
 import com.chibidolls.app.core.repository.CatalogRepository
 import com.chibidolls.app.core.repository.CharacterRepository
+import com.chibidolls.app.features.editor.components.CanvasPattern
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,10 +20,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class EditorUiState(
-    val character: Character = Character(),
+    val characterState: CharacterState = CharacterState(),
     val categories: List<Category> = emptyList(),
     val selectedCategoryId: String = "body",
     val itemsForSelectedCategory: List<CatalogItem> = emptyList(),
+    val allCatalogItems: List<CatalogItem> = emptyList(),
+    val backgroundPattern: CanvasPattern = CanvasPattern.PASTEL_PINK,
     val showColorPicker: Boolean = false,
     val showResetDialog: Boolean = false,
     val showSaveDialog: Boolean = false,
@@ -37,6 +41,7 @@ class CharacterEditorViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val characterId: String? = savedStateHandle["characterId"]
+    private var cachedCatalogResponse: CatalogResponse = CatalogResponse()
 
     private val _uiState = MutableStateFlow(EditorUiState())
     val uiState: StateFlow<EditorUiState> = _uiState.asStateFlow()
@@ -48,23 +53,31 @@ class CharacterEditorViewModel @Inject constructor(
     private fun loadData() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            val categories = catalogRepository.getCategories()
+            val catalog = catalogRepository.getCatalog()
+            cachedCatalogResponse = catalog
+            val categories = catalog.categories.sortedBy { it.zOrder }
             val initialCategory = categories.firstOrNull()?.id ?: "body"
 
-            val doll = if (!characterId.isNullOrEmpty()) {
-                characterRepository.getCharacterById(characterId) ?: catalogRepository.createDefaultCharacter()
+            val initialCharacterState = if (!characterId.isNullOrEmpty()) {
+                val existing = characterRepository.getCharacterById(characterId)
+                if (existing != null) {
+                    CharacterState.fromDomainCharacter(existing)
+                } else {
+                    CharacterLogicHelper.createDefaultCharacterState(catalog)
+                }
             } else {
-                catalogRepository.createDefaultCharacter()
+                CharacterLogicHelper.createDefaultCharacterState(catalog)
             }
 
-            val items = catalogRepository.getItemsByCategory(initialCategory)
+            val itemsForCat = catalog.items.filter { it.category == initialCategory }
 
             _uiState.update {
                 it.copy(
-                    character = doll,
+                    characterState = initialCharacterState,
                     categories = categories,
                     selectedCategoryId = initialCategory,
-                    itemsForSelectedCategory = items,
+                    itemsForSelectedCategory = itemsForCat,
+                    allCatalogItems = catalog.items,
                     isLoading = false
                 )
             }
@@ -72,71 +85,85 @@ class CharacterEditorViewModel @Inject constructor(
     }
 
     fun selectCategory(categoryId: String) {
-        viewModelScope.launch {
-            val items = catalogRepository.getItemsByCategory(categoryId)
-            _uiState.update {
-                it.copy(
-                    selectedCategoryId = categoryId,
-                    itemsForSelectedCategory = items
-                )
-            }
+        val itemsForCat = cachedCatalogResponse.items.filter { it.category == categoryId }
+        _uiState.update {
+            it.copy(
+                selectedCategoryId = categoryId,
+                itemsForSelectedCategory = itemsForCat
+            )
         }
     }
 
     fun equipItem(item: CatalogItem) {
         _uiState.update { state ->
-            val updatedSlots = state.character.slots.toMutableMap()
-            updatedSlots[item.category] = OutfitSlot(
-                slotType = item.category,
-                itemId = item.id,
-                tintColorHex = item.defaultColorHex,
-                customLayers = item.resolvedLayers()
+            val updatedSelected = state.characterState.selectedItems.toMutableMap()
+            updatedSelected[item.category] = item.id
+
+            val updatedColors = state.characterState.colorOverrides.toMutableMap()
+            if (!updatedColors.containsKey(item.category) && !item.defaultColorHex.isNullOrBlank()) {
+                CharacterLogicHelper.parseHexToColor(item.defaultColorHex)?.let {
+                    updatedColors[item.category] = it
+                }
+            }
+
+            state.copy(
+                characterState = state.characterState.copy(
+                    selectedItems = updatedSelected,
+                    colorOverrides = updatedColors
+                )
             )
-            state.copy(character = state.character.copy(slots = updatedSlots))
         }
     }
 
     fun unequipSlot(category: String) {
-        // Body and face cannot be unequipped (required)
-        if (category == "body" || category == "face") return
+        if (CharacterLogicHelper.REQUIRED_CATEGORIES.contains(category)) return
 
         _uiState.update { state ->
-            val updatedSlots = state.character.slots.toMutableMap()
-            updatedSlots.remove(category)
-            state.copy(character = state.character.copy(slots = updatedSlots))
+            val updatedSelected = state.characterState.selectedItems.toMutableMap()
+            updatedSelected[category] = null
+            state.copy(
+                characterState = state.characterState.copy(
+                    selectedItems = updatedSelected
+                )
+            )
         }
     }
 
     fun randomizeDoll() {
-        viewModelScope.launch {
-            val randomDoll = catalogRepository.createRandomCharacter()
-            _uiState.update { it.copy(character = randomDoll) }
+        val randomState = CharacterLogicHelper.createRandomCharacterState(cachedCatalogResponse)
+        _uiState.update {
+            it.copy(characterState = randomState)
         }
     }
 
     fun resetToDefault() {
-        viewModelScope.launch {
-            val defaultDoll = catalogRepository.createDefaultCharacter()
-            _uiState.update {
-                it.copy(
-                    character = defaultDoll,
-                    showResetDialog = false
-                )
-            }
+        val defaultState = CharacterLogicHelper.createDefaultCharacterState(cachedCatalogResponse)
+        _uiState.update {
+            it.copy(
+                characterState = defaultState,
+                showResetDialog = false
+            )
         }
     }
 
-    fun setTintColor(colorHex: String) {
+    fun setTintColor(color: Color) {
         val currentCategory = _uiState.value.selectedCategoryId
         _uiState.update { state ->
-            val currentSlot = state.character.slots[currentCategory]
-            if (currentSlot != null) {
-                val updatedSlots = state.character.slots.toMutableMap()
-                updatedSlots[currentCategory] = currentSlot.copy(tintColorHex = colorHex)
-                state.copy(character = state.character.copy(slots = updatedSlots))
-            } else {
-                state
-            }
+            val updatedColors = state.characterState.colorOverrides.toMutableMap()
+            updatedColors[currentCategory] = color
+            state.copy(
+                characterState = state.characterState.copy(
+                    colorOverrides = updatedColors
+                )
+            )
+        }
+    }
+
+    fun cycleBackground() {
+        _uiState.update { state ->
+            val patterns = CanvasPattern.values()
+            val nextIndex = (state.backgroundPattern.ordinal + 1) % patterns.size
+            state.copy(backgroundPattern = patterns[nextIndex])
         }
     }
 
@@ -154,13 +181,13 @@ class CharacterEditorViewModel @Inject constructor(
 
     fun saveDoll(dollName: String) {
         viewModelScope.launch {
-            val toSave = _uiState.value.character.copy(
-                name = dollName.ifBlank { "My Chibi Doll" }
+            val domainCharacter = _uiState.value.characterState.toDomainCharacter(
+                dollName = dollName.ifBlank { "My Chibi Doll" },
+                id = characterId
             )
-            characterRepository.saveCharacter(toSave)
+            characterRepository.saveCharacter(domainCharacter)
             _uiState.update {
                 it.copy(
-                    character = toSave,
                     showSaveDialog = false,
                     isSavedSuccess = true
                 )

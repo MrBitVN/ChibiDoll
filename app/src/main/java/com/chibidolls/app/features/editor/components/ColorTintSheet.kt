@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chibidolls.app.core.designsystem.PrimaryDeep
+import com.chibidolls.app.core.logic.CharacterLogicHelper
 
 val PastelSwatches = listOf(
     "#FFF1E6", // Fair skin
@@ -50,8 +51,8 @@ val PastelSwatches = listOf(
 
 @Composable
 fun ColorTintSheet(
-    currentColorHex: String?,
-    onColorSelected: (String) -> Unit,
+    currentColor: Color?,
+    onColorSelected: (Color) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -94,8 +95,8 @@ fun ColorTintSheet(
                 contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp)
             ) {
                 items(PastelSwatches) { hex ->
-                    val color = Color(android.graphics.Color.parseColor(hex))
-                    val isSelected = currentColorHex.equals(hex, ignoreCase = true)
+                    val color = CharacterLogicHelper.parseHexToColor(hex) ?: Color.White
+                    val isSelected = currentColor == color
 
                     Box(
                         modifier = Modifier
@@ -108,7 +109,7 @@ fun ColorTintSheet(
                                 color = if (isSelected) PrimaryDeep else Color.LightGray,
                                 shape = CircleShape
                             )
-                            .clickable { onColorSelected(hex) }
+                            .clickable { onColorSelected(color) }
                     )
                 }
             }
