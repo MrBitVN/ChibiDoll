@@ -156,6 +156,10 @@ fun SceneEditorScreen(
                     onDeleteItem = { id -> viewModel.deleteItem(id) },
                     onMoveLayerUp = { id -> viewModel.moveLayerUp(id) },
                     onMoveLayerDown = { id -> viewModel.moveLayerDown(id) },
+                    effectsEnabled = uiState.effectsEnabled,
+                    idleAnimationsEnabled = uiState.idleAnimationsEnabled,
+                    particleDensity = uiState.particleDensity,
+                    onToggleEffects = { viewModel.toggleSceneEffects() },
                     modifier = Modifier.fillMaxSize()
                 )
 

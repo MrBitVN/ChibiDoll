@@ -10,7 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -25,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Flip
@@ -32,7 +32,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -50,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.chibidolls.app.core.designsystem.PastelPink
 import com.chibidolls.app.core.designsystem.PastelYellow
 import com.chibidolls.app.core.designsystem.PrimaryBrand
 import com.chibidolls.app.core.designsystem.ResetRed
@@ -58,6 +56,7 @@ import com.chibidolls.app.core.model.CatalogItem
 import com.chibidolls.app.core.model.Character
 import com.chibidolls.app.core.model.Scene
 import com.chibidolls.app.core.model.SceneItem
+import com.chibidolls.app.core.performance.ParticleDensity
 import kotlin.math.roundToInt
 
 @Composable
@@ -73,6 +72,10 @@ fun SceneStageView(
     onDeleteItem: (String) -> Unit,
     onMoveLayerUp: (String) -> Unit,
     onMoveLayerDown: (String) -> Unit,
+    effectsEnabled: Boolean = true,
+    idleAnimationsEnabled: Boolean = true,
+    particleDensity: ParticleDensity = ParticleDensity.HIGH,
+    onToggleEffects: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -117,7 +120,14 @@ fun SceneStageView(
                 )
             }
 
-            // 2. Scene Items sorted by zOrder
+            // 2. Animated Particle Overlay (Sparkles, Butterflies, Bubbles)
+            SceneParticleOverlay(
+                enabled = effectsEnabled,
+                density = particleDensity,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            // 3. Scene Items sorted by zOrder
             val sortedItems = remember(scene.items) {
                 scene.items.sortedBy { it.zOrder }
             }
@@ -162,11 +172,12 @@ fun SceneStageView(
                             }
                         }
                 ) {
-                    // Item content
+                    // Item content with Idle Animation
                     SceneItemRenderer(
                         item = item,
                         catalogItems = catalogItems,
-                        dollsById = dollsById
+                        dollsById = dollsById,
+                        idleAnimationsEnabled = idleAnimationsEnabled
                     )
 
                     // Selection box outline
@@ -175,6 +186,31 @@ fun SceneStageView(
                             modifier = Modifier
                                 .matchParentSize()
                                 .border(2.5.dp, PrimaryBrand, RoundedCornerShape(12.dp))
+                        )
+                    }
+                }
+            }
+
+            // Quick toggle button for effects on top-right of canvas
+            if (onToggleEffects != null) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(10.dp)
+                ) {
+                    IconButton(
+                        onClick = onToggleEffects,
+                        modifier = Modifier
+                            .size(36.dp)
+                            .shadow(4.dp, CircleShape)
+                            .clip(CircleShape)
+                            .background(if (effectsEnabled) PastelYellow else Color.White.copy(alpha = 0.85f))
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.AutoAwesome,
+                            contentDescription = "Toggle Scene Effects",
+                            tint = if (effectsEnabled) Color(0xFFD97706) else Color(0xFF94A3B8),
+                            modifier = Modifier.size(20.dp)
                         )
                     }
                 }

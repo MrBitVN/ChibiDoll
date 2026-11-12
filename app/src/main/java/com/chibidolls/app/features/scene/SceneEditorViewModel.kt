@@ -11,6 +11,8 @@ import com.chibidolls.app.core.model.CatalogItem
 import com.chibidolls.app.core.model.Character
 import com.chibidolls.app.core.model.Scene
 import com.chibidolls.app.core.model.SceneItemType
+import com.chibidolls.app.core.performance.ParticleDensity
+import com.chibidolls.app.core.repository.AppSettingsRepository
 import com.chibidolls.app.core.repository.CatalogRepository
 import com.chibidolls.app.core.repository.CharacterRepository
 import com.chibidolls.app.core.repository.SceneRepository
@@ -31,6 +33,9 @@ data class SceneEditorUiState(
     val catalogItems: List<CatalogItem> = emptyList(),
     val savedDolls: List<Character> = emptyList(),
     val dollsById: Map<String, Character> = emptyMap(),
+    val effectsEnabled: Boolean = true,
+    val idleAnimationsEnabled: Boolean = true,
+    val particleDensity: ParticleDensity = ParticleDensity.HIGH,
     val isLoading: Boolean = true,
     val isSaving: Boolean = false,
     val isExporting: Boolean = false,
@@ -43,17 +48,25 @@ class SceneEditorViewModel @Inject constructor(
     private val sceneRepository: SceneRepository,
     private val characterRepository: CharacterRepository,
     private val catalogRepository: CatalogRepository,
+    private val appSettingsRepository: AppSettingsRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val sceneId: String? = savedStateHandle["sceneId"]
 
-    private val _uiState = MutableStateFlow(SceneEditorUiState())
+    private val _uiState = MutableStateFlow(
+        SceneEditorUiState(
+            effectsEnabled = appSettingsRepository.sceneEffectsEnabled.value,
+            idleAnimationsEnabled = appSettingsRepository.idleAnimationsEnabled.value,
+            particleDensity = appSettingsRepository.particleDensity.value
+        )
+    )
     val uiState: StateFlow<SceneEditorUiState> = _uiState.asStateFlow()
 
     init {
         loadData()
         observeDolls()
+        observeSettings()
     }
 
     private fun loadData() {
@@ -88,6 +101,29 @@ class SceneEditorViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun observeSettings() {
+        viewModelScope.launch {
+            appSettingsRepository.sceneEffectsEnabled.collect { enabled ->
+                _uiState.update { it.copy(effectsEnabled = enabled) }
+            }
+        }
+        viewModelScope.launch {
+            appSettingsRepository.idleAnimationsEnabled.collect { enabled ->
+                _uiState.update { it.copy(idleAnimationsEnabled = enabled) }
+            }
+        }
+        viewModelScope.launch {
+            appSettingsRepository.particleDensity.collect { density ->
+                _uiState.update { it.copy(particleDensity = density) }
+            }
+        }
+    }
+
+    fun toggleSceneEffects() {
+        val current = _uiState.value.effectsEnabled
+        appSettingsRepository.setSceneEffectsEnabled(!current)
     }
 
     private fun createInitialScene(items: List<CatalogItem>): Scene {
