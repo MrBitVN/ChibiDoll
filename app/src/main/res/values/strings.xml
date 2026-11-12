@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Chibi Dolls</string>
+    <string name="create_doll">Create Doll</string>
+    <string name="scene_studio">Scene Studio</string>
+    <string name="my_creations">My Dolls</string>
+    <string name="random_doll">Random</string>
+    <string name="settings">Settings</string>
+    <string name="reset_confirm">Reset doll to default?</string>
+    <string name="save">Save</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="doll_name">Doll Name</string>
+    <string name="color_picker">Color Tint</string>
+</resources>
