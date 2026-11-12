@@ -64,13 +64,28 @@ class CatalogRepository @Inject constructor(
             )
         }
 
-        // Face
-        catalog.items.firstOrNull { it.category == "face" }?.let { face ->
+        // Face / Eyes & Mouth
+        catalog.items.firstOrNull { it.category == "eyes" }?.let { eyes ->
+            defaultSlots["eyes"] = OutfitSlot(
+                slotType = "eyes",
+                itemId = eyes.id,
+                tintColorHex = eyes.defaultColorHex,
+                customLayers = eyes.resolvedLayers()
+            )
+        } ?: catalog.items.firstOrNull { it.category == "face" }?.let { face ->
             defaultSlots["face"] = OutfitSlot(
                 slotType = "face",
                 itemId = face.id,
                 tintColorHex = face.defaultColorHex,
                 customLayers = face.resolvedLayers()
+            )
+        }
+        catalog.items.firstOrNull { it.category == "mouth" }?.let { mouth ->
+            defaultSlots["mouth"] = OutfitSlot(
+                slotType = "mouth",
+                itemId = mouth.id,
+                tintColorHex = mouth.defaultColorHex,
+                customLayers = mouth.resolvedLayers()
             )
         }
 

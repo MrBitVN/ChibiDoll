@@ -95,7 +95,7 @@ fun DollCanvasView(
             } else {
                 // Render layers stacked in ascending zOrder order
                 sortedLayers.forEach { layer ->
-                    val colorFilter = layer.colorTint?.let { tint ->
+                    val colorFilter = layer.colorFilter ?: layer.colorTint?.let { tint ->
                         ColorFilter.tint(tint, BlendMode.Modulate)
                     }
 
@@ -104,7 +104,7 @@ fun DollCanvasView(
                             .data("file:///android_asset/${layer.file}")
                             .memoryCachePolicy(CachePolicy.ENABLED)
                             .diskCachePolicy(CachePolicy.ENABLED)
-                            .crossfade(true)
+                            .crossfade(false)
                             .build(),
                         contentDescription = layer.slot,
                         contentScale = ContentScale.Fit,

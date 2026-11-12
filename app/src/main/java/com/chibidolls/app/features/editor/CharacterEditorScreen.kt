@@ -178,10 +178,21 @@ fun CharacterEditorScreen(
             exit = slideOutVertically { it },
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
-            val currentColor = uiState.characterState.getColorOverride(uiState.selectedCategoryId)
+            val targetCategory = uiState.categories.find { it.id == uiState.colorTargetCategoryId }
+            val currentOverride = uiState.characterState.getColorOverride(uiState.colorTargetCategoryId)
+
             ColorTintSheet(
-                currentColor = currentColor,
-                onColorSelected = { viewModel.setTintColor(it) },
+                targetCategoryId = uiState.colorTargetCategoryId,
+                targetCategoryName = targetCategory?.name ?: "Item",
+                availableColorableCategories = uiState.availableColorableCategories,
+                currentOverride = currentOverride,
+                onCategoryChange = { viewModel.setColorTargetCategory(it) },
+                onColorSwatchSelected = { color, hex ->
+                    viewModel.setCategorySwatchColor(uiState.colorTargetCategoryId, color, hex)
+                },
+                onHueChange = { viewModel.setCategoryHue(uiState.colorTargetCategoryId, it) },
+                onSaturationChange = { viewModel.setCategorySaturation(uiState.colorTargetCategoryId, it) },
+                onResetCategoryColor = { viewModel.resetCategoryColor(uiState.colorTargetCategoryId) },
                 onClose = { viewModel.toggleColorPicker(false) }
             )
         }

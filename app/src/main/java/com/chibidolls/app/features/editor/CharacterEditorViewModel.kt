@@ -23,6 +23,7 @@ data class EditorUiState(
     val characterState: CharacterState = CharacterState(),
     val categories: List<Category> = emptyList(),
     val selectedCategoryId: String = "body",
+    val colorTargetCategoryId: String = "body",
     val itemsForSelectedCategory: List<CatalogItem> = emptyList(),
     val allCatalogItems: List<CatalogItem> = emptyList(),
     val backgroundPattern: CanvasPattern = CanvasPattern.PASTEL_PINK,
@@ -31,7 +32,27 @@ data class EditorUiState(
     val showSaveDialog: Boolean = false,
     val isLoading: Boolean = true,
     val isSavedSuccess: Boolean = false
-)
+) {
+    val isCurrentItemColorable: Boolean
+        get() {
+            val currentItemId = characterState.getEquippedItemId(selectedCategoryId) ?: return false
+            val currentItem = allCatalogItems.find { it.id == currentItemId } ?: return false
+            return currentItem.colorable
+        }
+
+    val availableColorableCategories: List<Category>
+        get() {
+            return categories.filter { cat ->
+                val equippedId = characterState.getEquippedItemId(cat.id)
+                if (equippedId != null) {
+                    val item = allCatalogItems.find { it.id == equippedId }
+                    item?.colorable == true
+                } else {
+                    false
+                }
+            }
+        }
+}
 
 @HiltViewModel
 class CharacterEditorViewModel @Inject constructor(
@@ -76,6 +97,7 @@ class CharacterEditorViewModel @Inject constructor(
                     characterState = initialCharacterState,
                     categories = categories,
                     selectedCategoryId = initialCategory,
+                    colorTargetCategoryId = initialCategory,
                     itemsForSelectedCategory = itemsForCat,
                     allCatalogItems = catalog.items,
                     isLoading = false
@@ -102,7 +124,10 @@ class CharacterEditorViewModel @Inject constructor(
             val updatedColors = state.characterState.colorOverrides.toMutableMap()
             if (!updatedColors.containsKey(item.category) && !item.defaultColorHex.isNullOrBlank()) {
                 CharacterLogicHelper.parseHexToColor(item.defaultColorHex)?.let {
-                    updatedColors[item.category] = it
+                    updatedColors[item.category] = CategoryColorOverride(
+                        selectedColor = it,
+                        selectedHex = item.defaultColorHex
+                    )
                 }
             }
 
@@ -146,16 +171,81 @@ class CharacterEditorViewModel @Inject constructor(
         }
     }
 
-    fun setTintColor(color: Color) {
-        val currentCategory = _uiState.value.selectedCategoryId
+    fun setColorTargetCategory(categoryId: String) {
+        _uiState.update { it.copy(colorTargetCategoryId = categoryId) }
+    }
+
+    fun setCategorySwatchColor(categoryId: String, color: Color, hex: String) {
         _uiState.update { state ->
-            val updatedColors = state.characterState.colorOverrides.toMutableMap()
-            updatedColors[currentCategory] = color
-            state.copy(
-                characterState = state.characterState.copy(
-                    colorOverrides = updatedColors
-                )
+            val updated = state.characterState.colorOverrides.toMutableMap()
+            val current = updated[categoryId] ?: CategoryColorOverride()
+            updated[categoryId] = current.copy(
+                selectedColor = color,
+                selectedHex = hex
             )
+            state.copy(
+                characterState = state.characterState.copy(colorOverrides = updated)
+            )
+        }
+    }
+
+    fun setCategoryHue(categoryId: String, hue: Float) {
+        _uiState.update { state ->
+            val updated = state.characterState.colorOverrides.toMutableMap()
+            val current = updated[categoryId] ?: CategoryColorOverride()
+            updated[categoryId] = current.copy(hue = hue)
+            state.copy(
+                characterState = state.characterState.copy(colorOverrides = updated)
+            )
+        }
+    }
+
+    fun setCategorySaturation(categoryId: String, saturation: Float) {
+        _uiState.update { state ->
+            val updated = state.characterState.colorOverrides.toMutableMap()
+            val current = updated[categoryId] ?: CategoryColorOverride()
+            updated[categoryId] = current.copy(saturation = saturation)
+            state.copy(
+                characterState = state.characterState.copy(colorOverrides = updated)
+            )
+        }
+    }
+
+    fun resetCategoryColor(categoryId: String) {
+        _uiState.update { state ->
+            val equippedId = state.characterState.getEquippedItemId(categoryId)
+            val defaultItem = state.allCatalogItems.find { it.id == equippedId }
+            val updated = state.characterState.colorOverrides.toMutableMap()
+            if (!defaultItem?.defaultColorHex.isNullOrBlank()) {
+                val color = CharacterLogicHelper.parseHexToColor(defaultItem.defaultColorHex)
+                updated[categoryId] = CategoryColorOverride(
+                    selectedColor = color,
+                    selectedHex = defaultItem.defaultColorHex,
+                    hue = 0f,
+                    saturation = 1.0f
+                )
+            } else {
+                updated.remove(categoryId)
+            }
+            state.copy(
+                characterState = state.characterState.copy(colorOverrides = updated)
+            )
+        }
+    }
+
+    fun toggleColorPicker(show: Boolean? = null) {
+        _uiState.update { state ->
+            val newShow = show ?: !state.showColorPicker
+            val targetCat = if (newShow) {
+                if (state.isCurrentItemColorable) {
+                    state.selectedCategoryId
+                } else {
+                    state.availableColorableCategories.firstOrNull()?.id ?: state.selectedCategoryId
+                }
+            } else {
+                state.colorTargetCategoryId
+            }
+            state.copy(showColorPicker = newShow, colorTargetCategoryId = targetCat)
         }
     }
 
@@ -169,10 +259,6 @@ class CharacterEditorViewModel @Inject constructor(
 
     fun showResetDialog(show: Boolean) {
         _uiState.update { it.copy(showResetDialog = show) }
-    }
-
-    fun toggleColorPicker(show: Boolean? = null) {
-        _uiState.update { it.copy(showColorPicker = show ?: !it.showColorPicker) }
     }
 
     fun showSaveDialog(show: Boolean) {

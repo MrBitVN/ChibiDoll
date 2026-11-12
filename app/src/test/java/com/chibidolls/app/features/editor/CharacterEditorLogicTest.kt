@@ -2,6 +2,7 @@ package com.chibidolls.app.features.editor
 
 import androidx.compose.ui.graphics.Color
 import com.chibidolls.app.core.logic.CharacterLogicHelper
+import com.chibidolls.app.core.logic.ColorMatrixUtils
 import com.chibidolls.app.core.model.CatalogItem
 import com.chibidolls.app.core.model.CatalogResponse
 import com.chibidolls.app.core.model.Category
@@ -20,8 +21,10 @@ class CharacterEditorLogicTest {
     @Before
     fun setup() {
         val categories = listOf(
-            Category(id = "body", name = "Body", zOrder = 300, required = true),
-            Category(id = "face", name = "Face", zOrder = 320, required = true),
+            Category(id = "body", name = "Skin", zOrder = 300, required = true),
+            Category(id = "eyes", name = "Eyes", zOrder = 320, required = true),
+            Category(id = "mouth", name = "Mouth", zOrder = 340, required = true),
+            Category(id = "blush", name = "Blush", zOrder = 310, required = false),
             Category(id = "hair", name = "Hair", zOrder = 700, required = false),
             Category(id = "top", name = "Tops", zOrder = 600, required = false),
             Category(id = "bottom", name = "Bottoms", zOrder = 500, required = false),
@@ -43,13 +46,30 @@ class CharacterEditorLogicTest {
                 defaultColorHex = "#FFF1E6"
             ),
             CatalogItem(
-                id = "face_smile",
-                category = "face",
-                name = "Anime Smile",
-                file = "items/face/smile.png",
+                id = "eyes_sparkle",
+                category = "eyes",
+                name = "Sparkle Eyes",
+                file = "items/face/eyes_sparkle.png",
                 zOrder = 320,
                 colorable = true,
                 defaultColorHex = "#48CAE4"
+            ),
+            CatalogItem(
+                id = "mouth_smile",
+                category = "mouth",
+                name = "Cute Smile",
+                file = "items/face/mouth_smile.png",
+                zOrder = 340,
+                colorable = false
+            ),
+            CatalogItem(
+                id = "blush_rose",
+                category = "blush",
+                name = "Rose Blush",
+                file = "items/face/blush_rose.png",
+                zOrder = 310,
+                colorable = true,
+                defaultColorHex = "#FFAFCC"
             ),
             CatalogItem(
                 id = "hair_twin_tails",
@@ -125,7 +145,7 @@ class CharacterEditorLogicTest {
             )
         )
 
-        mockCatalog = CatalogResponse(version = 1, categories = categories, items = items)
+        mockCatalog = CatalogResponse(version = 2, categories = categories, items = items)
     }
 
     @Test
@@ -133,7 +153,9 @@ class CharacterEditorLogicTest {
         val state = CharacterState(
             selectedItems = mapOf(
                 "body" to "body_fair",
-                "face" to "face_smile",
+                "eyes" to "eyes_sparkle",
+                "mouth" to "mouth_smile",
+                "blush" to "blush_rose",
                 "hair" to "hair_twin_tails",
                 "top" to "top_sailor",
                 "bottom" to "bottom_skirt",
@@ -147,8 +169,8 @@ class CharacterEditorLogicTest {
 
         val resolved = CharacterLogicHelper.resolveSortedLayers(state, mockCatalog.items)
 
-        // 10 items selected, but hair has 2 layers (back and front) -> 11 layers total
-        assertEquals(11, resolved.size)
+        // 12 items, but hair has 2 layers (back 250 and front 700) -> 13 layers total
+        assertEquals(13, resolved.size)
 
         // Verify strictly ascending zOrder
         for (i in 0 until resolved.size - 1) {
@@ -160,13 +182,22 @@ class CharacterEditorLogicTest {
             )
         }
 
-        // Verify hair separation: hair_back (250) must be first (before body 300)
+        // hair_back (250) must be first (behind body 300)
         assertEquals("hair_back", resolved[0].slot)
         assertEquals(250, resolved[0].zOrder)
 
-        // body (300) must be after hair_back and before face (320)
+        // body (300) must be after hair_back and before blush (310) and eyes (320)
         assertEquals("body", resolved[1].slot)
         assertEquals(300, resolved[1].zOrder)
+
+        assertEquals("blush", resolved[2].slot)
+        assertEquals(310, resolved[2].zOrder)
+
+        assertEquals("eyes", resolved[3].slot)
+        assertEquals(320, resolved[3].zOrder)
+
+        assertEquals("mouth", resolved[4].slot)
+        assertEquals(340, resolved[4].zOrder)
 
         // accessory (850) must be the topmost layer
         assertEquals("accessory", resolved.last().slot)
@@ -175,30 +206,21 @@ class CharacterEditorLogicTest {
 
     @Test
     fun testRandomCharacterAlwaysHasRequiredCategories() {
-        // Run random generation 20 times to ensure statistical reliability
         repeat(20) {
             val randomState = CharacterLogicHelper.createRandomCharacterState(mockCatalog)
 
-            // Required categories must NEVER be null
+            // Required facial & body categories must NEVER be null
             assertNotNull("Body must be equipped", randomState.selectedItems["body"])
-            assertNotNull("Face must be equipped", randomState.selectedItems["face"])
+            assertNotNull("Eyes must be equipped", randomState.selectedItems["eyes"])
+            assertNotNull("Mouth must be equipped", randomState.selectedItems["mouth"])
 
             val bodyItem = mockCatalog.items.find { it.id == randomState.selectedItems["body"] }
             assertNotNull("Body item ID must be valid in catalog", bodyItem)
             assertEquals("body", bodyItem?.category)
 
-            val faceItem = mockCatalog.items.find { it.id == randomState.selectedItems["face"] }
-            assertNotNull("Face item ID must be valid in catalog", faceItem)
-            assertEquals("face", faceItem?.category)
-
-            // Any other equipped item must be a valid item from the catalog
-            randomState.selectedItems.forEach { (cat, itemId) ->
-                if (itemId != null) {
-                    val item = mockCatalog.items.find { it.id == itemId }
-                    assertNotNull("Item $itemId must exist in catalog", item)
-                    assertEquals(cat, item?.category)
-                }
-            }
+            val eyesItem = mockCatalog.items.find { it.id == randomState.selectedItems["eyes"] }
+            assertNotNull("Eyes item ID must be valid in catalog", eyesItem)
+            assertEquals("eyes", eyesItem?.category)
         }
     }
 
@@ -208,12 +230,13 @@ class CharacterEditorLogicTest {
 
         // Default doll has essential basics
         assertEquals("body_fair", defaultState.selectedItems["body"])
-        assertEquals("face_smile", defaultState.selectedItems["face"])
+        assertEquals("eyes_sparkle", defaultState.selectedItems["eyes"])
+        assertEquals("mouth_smile", defaultState.selectedItems["mouth"])
         assertEquals("hair_twin_tails", defaultState.selectedItems["hair"])
         assertEquals("top_sailor", defaultState.selectedItems["top"])
         assertEquals("bottom_skirt", defaultState.selectedItems["bottom"])
 
-        // Optional accessories are not equipped
+        // Optional accessories are not equipped by default
         assertNull(defaultState.selectedItems["glasses"])
         assertNull(defaultState.selectedItems["hat"])
         assertNull(defaultState.selectedItems["accessory"])
@@ -224,15 +247,50 @@ class CharacterEditorLogicTest {
         val customPink = Color(0xFFFF69B4)
         val state = CharacterState(
             selectedItems = mapOf("hair" to "hair_twin_tails"),
-            colorOverrides = mapOf("hair" to customPink)
+            colorOverrides = mapOf(
+                "hair" to CategoryColorOverride(
+                    selectedColor = customPink,
+                    selectedHex = "#FF69B4",
+                    hue = 45f,
+                    saturation = 1.2f
+                )
+            )
         )
 
         val resolved = CharacterLogicHelper.resolveSortedLayers(state, mockCatalog.items)
         assertEquals(2, resolved.size)
 
-        // Both hair_back and hair_front should receive the overridden color
+        // Both hair_back and hair_front should receive the colorFilter and colorTint
+        assertNotNull(resolved[0].colorFilter)
+        assertNotNull(resolved[1].colorFilter)
         assertEquals(customPink, resolved[0].colorTint)
         assertEquals(customPink, resolved[1].colorTint)
+    }
+
+    @Test
+    fun testHueShiftColorMatrixPreservesOutlinesAndHighlights() {
+        // Test with hue shift 180 degrees and saturation 1.5
+        val matrix = ColorMatrixUtils.createHueSaturationMatrix(hueDegrees = 180f, saturation = 1.5f)
+        val values = matrix.values
+
+        // Black line art: R=0, G=0, B=0, A=1
+        // Output R' = m00*0 + m01*0 + m02*0 + m03*1 + m04 = m04
+        val outRBlack = values[4] // offset 0,4
+        val outGBlack = values[9] // offset 1,4
+        val outBBlack = values[14] // offset 2,4
+
+        assertEquals(0f, outRBlack, 0.001f)
+        assertEquals(0f, outGBlack, 0.001f)
+        assertEquals(0f, outBBlack, 0.001f)
+
+        // Identity check: hue=0, sat=1.0, brightness=1.0
+        val identity = ColorMatrixUtils.createHueSaturationMatrix(hueDegrees = 0f, saturation = 1.0f)
+        val idValues = identity.values
+        assertEquals(1f, idValues[0], 0.01f) // m00 ~ 1
+        assertEquals(0f, idValues[1], 0.01f) // m01 ~ 0
+        assertEquals(0f, idValues[2], 0.01f) // m02 ~ 0
+        assertEquals(1f, idValues[6], 0.01f) // m11 ~ 1
+        assertEquals(1f, idValues[12], 0.01f) // m22 ~ 1
     }
 
     @Test

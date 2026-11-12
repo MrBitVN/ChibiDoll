@@ -1,17 +1,36 @@
 package com.chibidolls.app.features.editor
 
 import androidx.compose.ui.graphics.Color
+import com.chibidolls.app.core.logic.CharacterLogicHelper
+import com.chibidolls.app.core.logic.ColorMatrixUtils
 import com.chibidolls.app.core.model.Character
 import com.chibidolls.app.core.model.OutfitSlot
+
+data class CategoryColorOverride(
+    val selectedColor: Color? = null,
+    val selectedHex: String? = null,
+    val hue: Float = 0f,          // 0f..360f
+    val saturation: Float = 1.0f, // 0.0f..2.0f
+    val brightness: Float = 1.0f  // 0.5f..1.5f
+) {
+    fun toColorFilter(): androidx.compose.ui.graphics.ColorFilter? {
+        return ColorMatrixUtils.createCompositeColorFilter(
+            selectedColor = selectedColor,
+            hue = hue,
+            saturation = saturation,
+            brightness = brightness
+        )
+    }
+}
 
 /**
  * CharacterState tracks active equips and color overrides per category:
  * selectedItems: Map<Category, ItemId?>
- * colorOverrides: Map<Category, Color>
+ * colorOverrides: Map<Category, CategoryColorOverride>
  */
 data class CharacterState(
     val selectedItems: Map<String, String?> = emptyMap(),
-    val colorOverrides: Map<String, Color> = emptyMap()
+    val colorOverrides: Map<String, CategoryColorOverride> = emptyMap()
 ) {
     fun isEquipped(category: String, itemId: String): Boolean {
         return selectedItems[category] == itemId
@@ -21,7 +40,7 @@ data class CharacterState(
         return selectedItems[category]
     }
 
-    fun getColorOverride(category: String): Color? {
+    fun getColorOverride(category: String): CategoryColorOverride? {
         return colorOverrides[category]
     }
 
@@ -29,8 +48,8 @@ data class CharacterState(
         val slots = mutableMapOf<String, OutfitSlot>()
         selectedItems.forEach { (cat, itemId) ->
             if (!itemId.isNullOrEmpty()) {
-                val color = colorOverrides[cat]
-                val hex = color?.let {
+                val override = colorOverrides[cat]
+                val hex = override?.selectedHex ?: override?.selectedColor?.let {
                     val alpha = (it.alpha * 255).toInt()
                     val red = (it.red * 255).toInt()
                     val green = (it.green * 255).toInt()
@@ -55,13 +74,16 @@ data class CharacterState(
     companion object {
         fun fromDomainCharacter(character: Character): CharacterState {
             val selected = mutableMapOf<String, String?>()
-            val colors = mutableMapOf<String, Color>()
+            val colors = mutableMapOf<String, CategoryColorOverride>()
 
             character.slots.forEach { (category, slot) ->
                 selected[category] = slot.itemId
                 slot.tintColorHex?.let { hex ->
-                    com.chibidolls.app.core.logic.CharacterLogicHelper.parseHexToColor(hex)?.let {
-                        colors[category] = it
+                    CharacterLogicHelper.parseHexToColor(hex)?.let { color ->
+                        colors[category] = CategoryColorOverride(
+                            selectedColor = color,
+                            selectedHex = hex
+                        )
                     }
                 }
             }

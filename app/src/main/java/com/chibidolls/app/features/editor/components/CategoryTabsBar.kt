@@ -48,6 +48,9 @@ fun getCategoryIcon(categoryId: String): ImageVector {
     return when (categoryId.lowercase()) {
         "body" -> Icons.Default.Person
         "face" -> Icons.Default.SentimentSatisfiedAlt
+        "eyes" -> Icons.Default.Visibility
+        "mouth" -> Icons.Default.SentimentSatisfiedAlt
+        "blush" -> Icons.Default.AutoAwesome
         "hair" -> Icons.Default.FaceRetouchingNatural
         "top" -> Icons.Default.Checkroom
         "bottom" -> Icons.Default.Straighten
