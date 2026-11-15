@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="top_vampire">
+    <!-- BAT-WING COLLAR (Black spreading across shoulders below chin) -->
+    <path d="M 512 730
+             C 475 705 410 685 350 715
+             C 375 730 395 750 375 770
+             C 405 770 425 785 415 810
+             C 450 790 480 770 512 765
+             C 544 770 574 790 609 810
+             C 599 785 619 770 649 770
+             C 629 750 649 730 674 715
+             C 614 685 549 705 512 730 Z"
+          fill="#2D1810" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Bat head center skull brooch -->
+    <path d="M 498 730 L 503 716 L 512 724 L 521 716 L 526 730 C 526 744 498 744 498 730 Z"
+          fill="#6D28D9" stroke="#FFFFFF" stroke-width="2.5"/>
+
+    <!-- INNER WHITE SHIRT V-NECK -->
+    <path d="M 475 760 L 549 760 L 512 850 Z" fill="#FFFFFF" stroke="#2D1810" stroke-width="5"/>
+
+    <!-- PURPLE PINSTRIPE JACKET / TUXEDO VEST -->
+    <path d="M 420 730
+             C 395 790 390 850 405 910
+             C 455 925 569 925 619 910
+             C 634 850 629 790 604 730
+             L 545 785 L 512 890 L 479 785 Z"
+          fill="#6D28D9" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+
+    <!-- Crisp White Pinstripes with fabric curve -->
+    <path d="M 425 765 C 422 810 422 855 428 900" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+    <path d="M 452 775 C 452 820 452 865 455 905" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+    <path d="M 572 775 C 572 820 572 865 569 905" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+    <path d="M 599 765 C 602 810 602 855 596 900" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+
+    <!-- Lapels (Notched V-cut) -->
+    <path d="M 475 760 L 445 830 L 505 885" fill="none" stroke="#2D1810" stroke-width="6"/>
+    <path d="M 549 760 L 579 830 L 519 885" fill="none" stroke="#2D1810" stroke-width="6"/>
+
+    <!-- Bottom Hem Band & Gold Buttons -->
+    <path d="M 405 900 C 455 915 569 915 619 900" fill="none" stroke="#2D1810" stroke-width="6"/>
+    <circle cx="512" cy="855" r="5.5" fill="#F59E0B" stroke="#2D1810" stroke-width="2.5"/>
+    <circle cx="512" cy="885" r="5.5" fill="#F59E0B" stroke="#2D1810" stroke-width="2.5"/>
+  </g>
+</svg>

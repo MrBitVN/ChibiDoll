@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <defs>
+    <!-- Soft cheek blush radial glow -->
+    <radialGradient id="blushGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FB7185" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#FB7185" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Anime doe eye iris gradient -->
+    <linearGradient id="eyeIris" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#047857"/>
+      <stop offset="50%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#6EE7B7"/>
+    </linearGradient>
+  </defs>
+
+  <g id="body_root">
+    <!-- 1. LEGS & FEET LAYER (Chubby toddler legs, rounded knees, bean feet) -->
+    <g id="legs_and_feet">
+      <!-- Left Leg (Thigh to Ankle seamlessly connected to Bean Foot) -->
+      <path d="M 418 960
+               C 400 1020 395 1110 400 1205
+               C 380 1215 365 1245 375 1275
+               C 388 1290 435 1292 468 1282
+               C 475 1255 470 1230 460 1205
+               C 468 1110 468 1020 462 960 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Right Leg (Thigh to Ankle seamlessly connected to Bean Foot) -->
+      <path d="M 562 960
+               C 556 1020 556 1110 564 1205
+               C 554 1230 549 1255 556 1282
+               C 589 1292 636 1290 649 1275
+               C 659 1245 644 1215 624 1205
+               C 629 1110 624 1020 606 960 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Soft Inner Thigh Shadow (Small curved patch, no straight lines) -->
+      <path d="M 462 980 C 452 1020 448 1070 452 1110 C 458 1110 464 1070 466 1020 Z"
+            fill="#F5C8B0"/>
+      <!-- Soft Knee Indentation Accents -->
+      <path d="M 425 1095 C 430 1100 436 1100 440 1095" fill="none" stroke="#F5C8B0" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M 584 1095 C 588 1100 594 1100 599 1095" fill="none" stroke="#F5C8B0" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- 2. TORSO & NECK LAYER (Em bé bụng tròn, vai dốc mềm, cổ thon) -->
+    <g id="torso_and_neck">
+      <!-- Neck (Tapered upward, Y=630 to Y=720, chin will overlap top) -->
+      <path d="M 482 630 L 476 720 C 500 730 524 730 548 720 L 542 630 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="7.5" stroke-linejoin="round"/>
+      <!-- Soft chin cast shadow on neck -->
+      <path d="M 482 630 C 500 665 524 665 542 630 L 540 655 C 522 680 502 680 484 655 Z"
+            fill="#F5C8B0"/>
+
+      <!-- Main Torso (Baby curves: Sloping shoulders Y=720, waist Y=880, tummy Y=915, hip Y=960) -->
+      <path d="M 476 720
+               C 445 730 420 745 410 790
+               C 402 835 410 875 415 885
+               C 400 920 405 950 415 970
+               C 455 985 569 985 609 970
+               C 619 950 624 920 609 885
+               C 614 875 622 835 614 790
+               C 604 745 579 730 548 720 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Cute Belly Button -->
+      <ellipse cx="512" cy="890" rx="3.5" ry="4.5" fill="#F5C8B0"/>
+    </g>
+
+    
+    <!-- UNDERWEAR LAYER (White Diaper / Panties with lavender elastic) -->
+    <g id="underwear">
+      <path d="M 405 885
+               C 445 898 579 898 619 885
+               C 628 935 615 975 608 995
+               C 565 1025 459 1025 416 995
+               C 409 975 396 935 405 885 Z"
+            fill="#FFFFFF" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+      <!-- Top Waistband Elastic Seam -->
+      <path d="M 407 900 C 445 912 579 912 617 900" fill="none" stroke="#C084FC" stroke-width="3.5" stroke-dasharray="8,5"/>
+      <!-- Leg Opening Cuffs -->
+      <path d="M 416 995 C 445 1010 468 1000 475 978" fill="none" stroke="#C084FC" stroke-width="3"/>
+      <path d="M 608 995 C 579 1010 556 1000 549 978" fill="none" stroke="#C084FC" stroke-width="3"/>
+    </g>
+
+    <!-- 3. ARMS & HANDS LAYER (Separate layer, tapering down to 3-finger baby hands) -->
+    <g id="arms_and_hands">
+      <!-- Left Arm (Shoulder Y=740 to Wrist Y=885) -->
+      <path d="M 414 745
+               C 380 765 352 815 348 880
+               C 346 892 355 902 368 905
+               C 382 908 395 898 400 882
+               C 410 825 418 780 418 745 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Soft Armpit Shadow -->
+      <path d="M 410 795 C 402 825 404 845 412 855 C 414 840 415 820 415 800 Z" fill="#F5C8B0"/>
+
+      <!-- Left Baby Hand (Thumb + 3 soft curved fingers) -->
+      <path d="M 352 890
+               C 334 900 334 918 348 924
+               C 350 934 358 942 368 942
+               C 378 942 386 935 388 925
+               C 396 925 402 915 398 905
+               C 394 892 380 888 370 892 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="6.5" stroke-linejoin="round"/>
+      <!-- Left Finger Details (delicate line accents) -->
+      <path d="M 350 912 C 358 916 366 916 372 910" fill="none" stroke="#2D1810" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M 368 932 C 374 932 380 928 382 920" fill="none" stroke="#2D1810" stroke-width="3.5" stroke-linecap="round"/>
+
+      <!-- Right Arm (Shoulder Y=740 to Wrist Y=885) -->
+      <path d="M 610 745
+               C 644 765 672 815 676 880
+               C 678 892 669 902 656 905
+               C 642 908 629 898 624 882
+               C 614 825 606 780 606 745 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Soft Right Armpit Shadow -->
+      <path d="M 614 795 C 622 825 620 845 612 855 C 610 840 609 820 609 800 Z" fill="#F5C8B0"/>
+
+      <!-- Right Baby Hand (Thumb + 3 soft curved fingers) -->
+      <path d="M 672 890
+               C 690 900 690 918 676 924
+               C 674 934 666 942 656 942
+               C 646 942 638 935 636 925
+               C 628 925 622 915 626 905
+               C 630 892 644 888 654 892 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="6.5" stroke-linejoin="round"/>
+      <!-- Right Finger Details (delicate line accents) -->
+      <path d="M 674 912 C 666 916 658 916 652 910" fill="none" stroke="#2D1810" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M 656 932 C 650 932 644 928 642 920" fill="none" stroke="#2D1810" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- 4. HEAD & FACE LAYER (Overlaps on top of neck so no gap exists) -->
+    <g id="head_and_face">
+      <!-- Ears -->
+      <path d="M 308 495 C 275 495 275 550 312 555 Z" fill="#FFEBE0" stroke="#2D1810" stroke-width="7"/>
+      <path d="M 302 515 C 294 520 294 535 308 538" fill="none" stroke="#F5C8B0" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 716 495 C 749 495 749 550 712 555 Z" fill="#FFEBE0" stroke="#2D1810" stroke-width="7"/>
+      <path d="M 722 515 C 730 520 730 535 716 538" fill="none" stroke="#F5C8B0" stroke-width="4" stroke-linecap="round"/>
+
+      <!-- Head Silhouette (Clean Bézier toddler curve, round dome, chubby cheeks, soft chin) -->
+      <path d="M 512 285 C 410 285 340 350 310 440 C 290 500 295 585 355 635 C 405 675 465 665 512 665 C 559 665 619 675 669 635 C 729 585 734 500 714 440 C 684 350 614 285 512 285 Z"
+            fill="#FFEBE0" stroke="#2D1810" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Soft Pink Cheek Blush Glow -->
+      <ellipse cx="380" cy="565" rx="55" ry="30" fill="url(#blushGlow)"/>
+      <ellipse cx="644" cy="565" rx="55" ry="30" fill="url(#blushGlow)"/>
+
+      <!-- Delicate Tiny Nose -->
+      <path d="M 510 540 C 512 546 516 546 518 540" fill="none" stroke="#F5C8B0" stroke-width="4" stroke-linecap="round"/>
+
+      <!-- Sweet Cheerful Chibi Smile -->
+      <path d="M 496 572 C 504 586 520 586 528 572" fill="none" stroke="#2D1810" stroke-width="5" stroke-linecap="round"/>
+      <path d="M 507 583 C 512 586 516 586 520 583" fill="none" stroke="#FB7185" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Big Sparkling Anime Doe Eyes (Y=510, friendly, gentle) -->
+      <!-- Left Eye -->
+      <g id="left_eye">
+        <ellipse cx="410" cy="510" rx="44" ry="52" fill="#2D1810"/>
+        <ellipse cx="410" cy="515" rx="40" ry="45" fill="url(#eyeIris)"/>
+        <ellipse cx="410" cy="510" rx="20" ry="24" fill="#2D1810"/>
+        <ellipse cx="398" cy="492" rx="14" ry="17" fill="#FFFFFF"/>
+        <circle cx="424" cy="528" r="6.5" fill="#FFFFFF"/>
+        <circle cx="400" cy="538" r="4" fill="#FFFFFF"/>
+        <!-- Soft Curved Eyelash Wing -->
+        <path d="M 362 505 C 377 468 440 468 458 498"
+              fill="none" stroke="#2D1810" stroke-width="8" stroke-linecap="round"/>
+        <path d="M 452 490 L 468 480" fill="none" stroke="#2D1810" stroke-width="6.5" stroke-linecap="round"/>
+        <!-- Eyebrow Arch -->
+        <path d="M 378 450 C 398 436 433 440 445 455"
+              fill="none" stroke="#5C3A21" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <!-- Right Eye -->
+      <g id="right_eye">
+        <ellipse cx="614" cy="510" rx="44" ry="52" fill="#2D1810"/>
+        <ellipse cx="614" cy="515" rx="40" ry="45" fill="url(#eyeIris)"/>
+        <ellipse cx="614" cy="510" rx="20" ry="24" fill="#2D1810"/>
+        <ellipse cx="602" cy="492" rx="14" ry="17" fill="#FFFFFF"/>
+        <circle cx="628" cy="528" r="6.5" fill="#FFFFFF"/>
+        <circle cx="604" cy="538" r="4" fill="#FFFFFF"/>
+        <!-- Soft Curved Eyelash Wing -->
+        <path d="M 662 505 C 647 468 584 468 566 498"
+              fill="none" stroke="#2D1810" stroke-width="8" stroke-linecap="round"/>
+        <path d="M 572 490 L 556 480" fill="none" stroke="#2D1810" stroke-width="6.5" stroke-linecap="round"/>
+        <!-- Eyebrow Arch -->
+        <path d="M 646 450 C 626 436 591 440 579 455"
+              fill="none" stroke="#5C3A21" stroke-width="6" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+</svg>

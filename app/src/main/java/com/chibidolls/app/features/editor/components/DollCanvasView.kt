@@ -54,6 +54,10 @@ fun DollCanvasView(
         CharacterLogicHelper.resolveSortedLayers(characterState, catalogItems)
     }
 
+    LaunchedEffect(sortedLayers.size) {
+        android.util.Log.i("DollCanvasView", "Rendering doll: ${sortedLayers.size} layers active: ${sortedLayers.map { "${it.slot}(${it.file})" }}")
+    }
+
     // Spring scale bounce animation when item is equipped / updated
     val bounceScale = remember { Animatable(1.0f) }
     LaunchedEffect(characterState) {
@@ -148,31 +152,47 @@ fun DollCanvasView(
     val context = LocalContext.current
     val sortedLayers = character.getSortedLayers()
 
+    val previewFile = character.previewImagePath?.let { java.io.File(it) }
+
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
-        sortedLayers.forEach { (layer, tintHex) ->
-            val colorFilter = if (!tintHex.isNullOrEmpty()) {
-                CharacterLogicHelper.parseHexToColor(tintHex)?.let {
-                    ColorFilter.tint(it, BlendMode.Modulate)
-                }
-            } else null
-
+        if (previewFile != null && previewFile.exists()) {
             AsyncImage(
                 model = ImageRequest.Builder(context)
-                    .data("file:///android_asset/${layer.file}")
+                    .data(previewFile)
                     .memoryCachePolicy(CachePolicy.ENABLED)
                     .diskCachePolicy(CachePolicy.ENABLED)
                     .crossfade(true)
                     .build(),
-                contentDescription = layer.slot,
+                contentDescription = character.name,
                 contentScale = ContentScale.Fit,
-                colorFilter = colorFilter,
                 modifier = Modifier.fillMaxSize()
             )
+        } else {
+            sortedLayers.forEach { (layer, tintHex) ->
+                val colorFilter = if (!tintHex.isNullOrEmpty()) {
+                    CharacterLogicHelper.parseHexToColor(tintHex)?.let {
+                        ColorFilter.tint(it, BlendMode.Modulate)
+                    }
+                } else null
+
+                AsyncImage(
+                    model = ImageRequest.Builder(context)
+                        .data("file:///android_asset/${layer.file}")
+                        .memoryCachePolicy(CachePolicy.ENABLED)
+                        .diskCachePolicy(CachePolicy.ENABLED)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = layer.slot,
+                    contentScale = ContentScale.Fit,
+                    colorFilter = colorFilter,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
     }
 }

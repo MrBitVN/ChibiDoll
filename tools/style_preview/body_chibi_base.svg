@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <defs>
+    <!-- Soft cheek blush radial glow -->
+    <radialGradient id="blushGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FB7185" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FB7185" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Shiny anime doe eye iris gradient -->
+    <linearGradient id="eyeIris" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#047857"/>
+      <stop offset="50%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#6EE7B7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- BODY GROUP -->
+  <g id="base_chibi_body">
+    <!-- LEGS (Slightly separated chubby toddler legs) -->
+    <!-- Left Leg -->
+    <path d="M 415 970
+             C 400 1040 395 1140 400 1240
+             C 402 1260 458 1260 460 1240
+             C 465 1140 465 1040 460 970 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left Leg Inner Shadow -->
+    <path d="M 405 1010 C 400 1080 400 1170 404 1235 C 414 1235 422 1210 422 1130 C 422 1060 416 1010 416 1010 Z"
+          fill="#F5C8B0"/>
+
+    <!-- Right Leg -->
+    <path d="M 564 970
+             C 559 1040 559 1140 564 1240
+             C 566 1260 622 1260 624 1240
+             C 629 1140 624 1040 609 970 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right Leg Inner Shadow -->
+    <path d="M 619 1010 C 624 1080 624 1170 620 1235 C 610 1235 602 1210 602 1130 C 602 1060 608 1010 608 1010 Z"
+          fill="#F5C8B0"/>
+
+    <!-- FEET (Cute rounded toddler feet, turned slightly outward) -->
+    <!-- Left Foot -->
+    <path d="M 390 1235
+             C 365 1240 360 1280 400 1285
+             C 440 1290 470 1285 470 1255
+             C 470 1240 435 1235 390 1235 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right Foot -->
+    <path d="M 554 1255
+             C 554 1285 584 1290 624 1285
+             C 664 1280 659 1240 634 1235
+             C 589 1235 554 1240 554 1255 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- TORSO (Chubby baby tummy) -->
+    <path d="M 420 720
+             C 395 780 390 860 405 950
+             C 445 965 579 965 619 950
+             C 634 860 629 780 604 720 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- WHITE DIAPER / PANTIES (Screenshot 4) -->
+    <path d="M 403 890
+             C 445 902 579 902 621 890
+             C 629 935 615 970 610 985
+             C 565 1015 459 1015 414 985
+             C 409 970 395 935 403 890 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Diaper Top Elastic Seam -->
+    <path d="M 405 905 C 445 916 579 916 619 905" fill="none" stroke="#C084FC" stroke-width="3.5" stroke-dasharray="8,5"/>
+    <!-- Diaper Leg Openings -->
+    <path d="M 414 985 C 445 1000 465 990 472 970" fill="none" stroke="#C084FC" stroke-width="3"/>
+    <path d="M 610 985 C 579 1000 559 990 552 970" fill="none" stroke="#C084FC" stroke-width="3"/>
+
+    <!-- ARMS & TINY SOFT HANDS -->
+    <!-- Left Arm -->
+    <path d="M 420 725
+             C 375 745 345 800 340 885
+             C 335 918 350 935 370 940
+             C 390 945 405 925 410 890
+             C 420 820 425 765 420 725 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Left Hand Soft Fingers -->
+    <path d="M 340 910 C 330 920 332 935 345 938" fill="none" stroke="#2D1810" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 360 940 C 362 925 372 925 380 935" fill="none" stroke="#2D1810" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Right Arm -->
+    <path d="M 604 725
+             C 649 745 679 800 684 885
+             C 689 918 674 935 654 940
+             C 634 945 619 925 614 890
+             C 604 820 599 765 604 725 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right Hand Soft Fingers -->
+    <path d="M 684 910 C 694 920 692 935 679 938" fill="none" stroke="#2D1810" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 664 940 C 662 925 652 925 644 935" fill="none" stroke="#2D1810" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- NECK (Short & cute connecting to shoulders) -->
+    <path d="M 485 660 L 485 730 C 503 738 521 738 539 730 L 539 660 Z"
+          fill="#F5C8B0" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+
+    <!-- HEAD & CHUBBY CHEEKS (Authentic teardrop toddler chibi head shape) -->
+    <path d="M 335 480
+             C 305 520 300 610 375 660
+             C 425 690 480 695 512 695
+             C 544 695 599 690 649 660
+             C 724 610 719 520 689 480
+             C 660 365 595 285 512 285
+             C 429 285 364 365 335 480 Z"
+          fill="#FFEBE0" stroke="#2D1810" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- EARS with inner spiral -->
+    <!-- Left Ear -->
+    <path d="M 330 485 C 285 485 285 555 332 560 Z" fill="#FFEBE0" stroke="#2D1810" stroke-width="7"/>
+    <path d="M 318 510 C 308 515 308 535 328 540" fill="none" stroke="#F5C8B0" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- Right Ear -->
+    <path d="M 694 485 C 739 485 739 555 692 560 Z" fill="#FFEBE0" stroke="#2D1810" stroke-width="7"/>
+    <path d="M 706 510 C 716 515 716 535 696 540" fill="none" stroke="#F5C8B0" stroke-width="4.5" stroke-linecap="round"/>
+
+    <!-- SOFT CHEEK BLUSH GLOW (Screenshots 4 & 5) -->
+    <ellipse cx="380" cy="565" rx="55" ry="30" fill="url(#blushGlow)"/>
+    <ellipse cx="644" cy="565" rx="55" ry="30" fill="url(#blushGlow)"/>
+
+    <!-- DELICATE TINY NOSE -->
+    <path d="M 510 540 C 512 546 516 546 518 540" fill="none" stroke="#F5C8B0" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- CUTE SWEET CHIBI SMILE (Screenshot 4) -->
+    <path d="M 496 570 C 504 584 520 584 528 570" fill="none" stroke="#2D1810" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 507 582 C 512 585 516 585 520 582" fill="none" stroke="#FB7185" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- BIG SPARKLING ANIME DOE EYES (Gentle, friendly, wide-open) -->
+    <!-- Left Eye -->
+    <g id="left_eye">
+      <!-- Outer Shape & Eyelash -->
+      <ellipse cx="408" cy="510" rx="44" ry="52" fill="#2D1810"/>
+      <ellipse cx="408" cy="515" rx="40" ry="45" fill="url(#eyeIris)"/>
+      <!-- Deep Pupil -->
+      <ellipse cx="408" cy="510" rx="20" ry="24" fill="#2D1810"/>
+      <!-- Big Upper Gloss Reflection -->
+      <ellipse cx="396" cy="492" rx="14" ry="17" fill="#FFFFFF"/>
+      <!-- Lower Sparkles -->
+      <circle cx="422" cy="528" r="6.5" fill="#FFFFFF"/>
+      <circle cx="398" cy="538" r="4" fill="#FFFFFF"/>
+      <!-- Soft Curved Eyelash Wing -->
+      <path d="M 360 505 C 375 468 438 468 456 498" fill="none" stroke="#2D1810" stroke-width="8" stroke-linecap="round"/>
+      <path d="M 450 490 L 466 480" fill="none" stroke="#2D1810" stroke-width="6.5" stroke-linecap="round"/>
+      <!-- Gentle Eyebrow Arch -->
+      <path d="M 375 450 C 395 436 430 440 442 455" fill="none" stroke="#5C3A21" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Right Eye -->
+    <g id="right_eye">
+      <!-- Outer Shape & Eyelash -->
+      <ellipse cx="616" cy="510" rx="44" ry="52" fill="#2D1810"/>
+      <ellipse cx="616" cy="515" rx="40" ry="45" fill="url(#eyeIris)"/>
+      <!-- Deep Pupil -->
+      <ellipse cx="616" cy="510" rx="20" ry="24" fill="#2D1810"/>
+      <!-- Big Upper Gloss Reflection -->
+      <ellipse cx="604" cy="492" rx="14" ry="17" fill="#FFFFFF"/>
+      <!-- Lower Sparkles -->
+      <circle cx="630" cy="528" r="6.5" fill="#FFFFFF"/>
+      <circle cx="606" cy="538" r="4" fill="#FFFFFF"/>
+      <!-- Soft Curved Eyelash Wing -->
+      <path d="M 664 505 C 649 468 586 468 568 498" fill="none" stroke="#2D1810" stroke-width="8" stroke-linecap="round"/>
+      <path d="M 574 490 L 558 480" fill="none" stroke="#2D1810" stroke-width="6.5" stroke-linecap="round"/>
+      <!-- Gentle Eyebrow Arch -->
+      <path d="M 649 450 C 629 436 594 440 582 455" fill="none" stroke="#5C3A21" stroke-width="6" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

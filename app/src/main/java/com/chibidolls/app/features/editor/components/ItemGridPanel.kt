@@ -1,5 +1,6 @@
 package com.chibidolls.app.features.editor.components
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,7 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -22,25 +23,21 @@ import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.chibidolls.app.core.designsystem.PastelPinkDeep
-import com.chibidolls.app.core.designsystem.PrimaryDeep
-import com.chibidolls.app.core.designsystem.PrimarySoft
+import com.chibidolls.app.core.designsystem.components.ChibiDollRenderer
 import com.chibidolls.app.core.model.CatalogItem
 import com.chibidolls.app.core.model.Category
 
@@ -48,41 +45,50 @@ import com.chibidolls.app.core.model.Category
 fun ItemGridPanel(
     categories: List<Category>,
     selectedCategoryId: String,
+    selectedPackId: String,
     items: List<CatalogItem>,
     equippedItemId: String?,
+    onPackSelected: (String) -> Unit,
+    isPackUnlocked: (String) -> Boolean,
     onCategorySelected: (String) -> Unit,
     onItemEquip: (CatalogItem) -> Unit,
     onItemUnequip: () -> Unit,
+    isItemUnlocked: (CatalogItem) -> Boolean = { true },
+    onLockedItemClick: (CatalogItem) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val panelShape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
-    val isCategoryRequired = selectedCategoryId == "body" || selectedCategoryId == "face"
+    val isCategoryRequired = selectedCategoryId == "body" || selectedCategoryId == "eyes" || selectedCategoryId == "mouth"
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(10.dp, panelShape)
-            .clip(panelShape)
-            .background(PrimarySoft)
+            .background(Color(0xFFEBF4FF)) // Soft pastel blue panel background
     ) {
-        // Category Tabs with Icons
+        // Row 1: Pack Tabs (Star, Book, Halloween, Princess, Winter, K-Pop, Jewelry)
+        PackTabsBar(
+            selectedPackId = selectedPackId,
+            isPackUnlocked = isPackUnlocked,
+            onPackSelected = onPackSelected
+        )
+
+        // Row 2: Category Tabs (Eyes, Mouth, Hair, Top, Shorts, Skirt, Shoes, etc.)
         CategoryTabsBar(
             categories = categories,
             selectedCategoryId = selectedCategoryId,
             onCategorySelected = onCategorySelected
         )
 
-        // 4-Column Item Grid
+        // 4-Column Grid (screenshots 4, 5, 6, 7)
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 12.dp),
-            contentPadding = PaddingValues(bottom = 16.dp, top = 2.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(horizontal = 8.dp),
+            contentPadding = PaddingValues(top = 4.dp, bottom = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            // "None" / Bỏ chọn slot for optional categories
+            // First Slot: "Deselect" / None (Circle with diagonal slash, screenshot 4)
             if (!isCategoryRequired) {
                 item {
                     val isNoneSelected = equippedItemId == null
@@ -90,95 +96,100 @@ fun ItemGridPanel(
                         isSelected = isNoneSelected,
                         onClick = onItemUnequip
                     ) {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Block,
-                                contentDescription = "None",
-                                tint = if (isNoneSelected) PastelPinkDeep else Color.LightGray,
-                                modifier = Modifier.size(24.dp)
+                        Canvas(modifier = Modifier.fillMaxSize().padding(10.dp)) {
+                            val r = size.minDimension / 2f
+                            val center = size / 2f
+                            // Blue circle with diagonal slash
+                            val slashColor = Color(0xFF0284C7)
+                            drawCircle(
+                                color = slashColor,
+                                radius = r * 0.78f,
+                                center = androidx.compose.ui.geometry.Offset(center.width, center.height),
+                                style = Stroke(width = r * 0.16f)
                             )
-                            Text(
-                                text = "None",
-                                fontSize = 10.sp,
-                                color = if (isNoneSelected) PastelPinkDeep else Color.Gray,
-                                fontWeight = FontWeight.Medium
+                            val cos45 = (r * 0.78f * 0.7071f)
+                            drawLine(
+                                color = slashColor,
+                                start = androidx.compose.ui.geometry.Offset(center.width - cos45, center.height - cos45),
+                                end = androidx.compose.ui.geometry.Offset(center.width + cos45, center.height + cos45),
+                                strokeWidth = r * 0.16f,
+                                cap = StrokeCap.Round
                             )
                         }
                     }
                 }
             }
 
-            // Items in selected category
-            items(items, key = { it.id }) { item ->
+            // Items in Category
+            itemsIndexed(items, key = { _, item -> item.id }) { index, item ->
                 val isSelected = item.id == equippedItemId
+                val isLocked = item.isPremium && !isItemUnlocked(item)
                 val context = LocalContext.current
 
                 ItemCard(
                     isSelected = isSelected,
-                    onClick = { onItemEquip(item) }
+                    onClick = {
+                        if (isLocked) {
+                            onLockedItemClick(item)
+                        } else {
+                            onItemEquip(item)
+                        }
+                    }
                 ) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        // For facial features: render on blank chibi head model template (screenshots 5, 6, 7)
+                        if (selectedCategoryId == "eyes" || selectedCategoryId == "eyebrows" || selectedCategoryId == "mouth" || selectedCategoryId == "blush") {
+                            Canvas(modifier = Modifier.fillMaxSize().padding(2.dp)) {
+                                ChibiDollRenderer.drawBlankChibiHead(this, size)
+                            }
+                        }
+
+                        // Thumbnail rendered from actual asset layer
                         val imagePath = item.thumbnail ?: item.file ?: ""
                         AsyncImage(
                             model = ImageRequest.Builder(context)
                                 .data("file:///android_asset/$imagePath")
                                 .memoryCachePolicy(CachePolicy.ENABLED)
                                 .diskCachePolicy(CachePolicy.ENABLED)
-                                .crossfade(true)
+                                .crossfade(false)
                                 .build(),
                             contentDescription = item.name,
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(4.dp)
+                                .padding(if (selectedCategoryId in listOf("eyes", "eyebrows", "mouth", "blush")) 3.dp else 6.dp)
                         )
 
-                        // Name label
-                        Text(
-                            text = item.name,
-                            fontSize = 9.sp,
-                            maxLines = 1,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFF334155),
-                            modifier = Modifier
-                                .padding(2.dp)
-                                .align(Alignment.BottomCenter)
-                        )
-
-                        // VIP Lock Badge
-                        if (item.isPremium) {
+                        // VIP Lock Badge (if locked)
+                        if (isLocked) {
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.TopEnd)
                                     .padding(3.dp)
                                     .size(16.dp)
+                                    .shadow(2.dp, CircleShape)
                                     .clip(CircleShape)
-                                    .background(Color(0xFFFBBF24)),
+                                    .background(Color(0xFFE53935)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Lock,
-                                    contentDescription = "VIP",
+                                    contentDescription = "Locked",
                                     tint = Color.White,
-                                    modifier = Modifier.size(10.dp)
+                                    modifier = Modifier.size(9.dp)
                                 )
                             }
                         }
 
-                        // Equipped Checkmark Badge
+                        // Selected checkmark or border
                         if (isSelected) {
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.TopStart)
                                     .padding(3.dp)
-                                    .size(16.dp)
+                                    .size(15.dp)
                                     .clip(CircleShape)
-                                    .background(PastelPinkDeep),
+                                    .background(Color(0xFF0284C7)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -200,21 +211,22 @@ fun ItemGridPanel(
 private fun ItemCard(
     isSelected: Boolean,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val cardShape = RoundedCornerShape(16.dp)
+    val shape = RoundedCornerShape(12.dp)
+    val borderColor = if (isSelected) Color(0xFFEC4899) else Color(0xFFBAE6FD) // Pink border when selected
+    val borderWidth = if (isSelected) 2.5.dp else 1.dp
+
     Box(
-        modifier = Modifier
+        modifier = modifier
             .aspectRatio(1f)
-            .shadow(if (isSelected) 4.dp else 1.dp, cardShape)
-            .clip(cardShape)
+            .shadow(if (isSelected) 4.dp else 1.dp, shape)
+            .clip(shape)
             .background(Color.White)
-            .border(
-                width = if (isSelected) 2.5.dp else 1.dp,
-                color = if (isSelected) PastelPinkDeep else Color(0xFFE2E8F0),
-                shape = cardShape
-            )
-            .clickable(onClick = onClick)
+            .border(borderWidth, borderColor, shape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
     ) {
         content()
     }

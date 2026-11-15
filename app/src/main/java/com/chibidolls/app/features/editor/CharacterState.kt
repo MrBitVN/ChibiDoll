@@ -3,6 +3,7 @@ package com.chibidolls.app.features.editor
 import androidx.compose.ui.graphics.Color
 import com.chibidolls.app.core.logic.CharacterLogicHelper
 import com.chibidolls.app.core.logic.ColorMatrixUtils
+import com.chibidolls.app.core.model.CatalogItem
 import com.chibidolls.app.core.model.Character
 import com.chibidolls.app.core.model.OutfitSlot
 
@@ -30,7 +31,8 @@ data class CategoryColorOverride(
  */
 data class CharacterState(
     val selectedItems: Map<String, String?> = emptyMap(),
-    val colorOverrides: Map<String, CategoryColorOverride> = emptyMap()
+    val colorOverrides: Map<String, CategoryColorOverride> = emptyMap(),
+    val skinToneLevel: Int = 3 // 0..15 skin tones from SkinTonePalette
 ) {
     fun isEquipped(category: String, itemId: String): Boolean {
         return selectedItems[category] == itemId
@@ -44,29 +46,50 @@ data class CharacterState(
         return colorOverrides[category]
     }
 
-    fun toDomainCharacter(dollName: String, id: String? = null): Character {
+    fun toDomainCharacter(
+        dollName: String,
+        id: String? = null,
+        catalogItems: List<CatalogItem> = emptyList(),
+        tags: List<String> = emptyList(),
+        bio: String? = null,
+        previewImagePath: String? = null,
+        createdAt: Long? = null
+    ): Character {
+        val itemsById = catalogItems.associateBy { it.id }
         val slots = mutableMapOf<String, OutfitSlot>()
         selectedItems.forEach { (cat, itemId) ->
             if (!itemId.isNullOrEmpty()) {
-                val override = colorOverrides[cat]
-                val hex = override?.selectedHex ?: override?.selectedColor?.let {
-                    val alpha = (it.alpha * 255).toInt()
-                    val red = (it.red * 255).toInt()
-                    val green = (it.green * 255).toInt()
-                    val blue = (it.blue * 255).toInt()
-                    String.format("#%02X%02X%02X%02X", alpha, red, green, blue)
+                val hex = if (cat == "body") {
+                    com.chibidolls.app.core.designsystem.components.SkinTonePalette.getSkinHex(skinToneLevel)
+                } else {
+                    val override = colorOverrides[cat]
+                    override?.selectedHex ?: override?.selectedColor?.let {
+                        val alpha = (it.alpha * 255).toInt()
+                        val red = (it.red * 255).toInt()
+                        val green = (it.green * 255).toInt()
+                        val blue = (it.blue * 255).toInt()
+                        String.format("#%02X%02X%02X%02X", alpha, red, green, blue)
+                    }
                 }
+                val item = itemsById[itemId]
                 slots[cat] = OutfitSlot(
                     slotType = cat,
                     itemId = itemId,
-                    tintColorHex = hex
+                    tintColorHex = hex,
+                    customLayers = item?.resolvedLayers()
                 )
             }
         }
 
+        val now = System.currentTimeMillis()
         return Character(
             id = id ?: java.util.UUID.randomUUID().toString(),
             name = dollName,
+            createdAt = createdAt ?: now,
+            updatedAt = now,
+            previewImagePath = previewImagePath,
+            tags = tags,
+            bio = bio,
             slots = slots
         )
     }
@@ -75,10 +98,17 @@ data class CharacterState(
         fun fromDomainCharacter(character: Character): CharacterState {
             val selected = mutableMapOf<String, String?>()
             val colors = mutableMapOf<String, CategoryColorOverride>()
+            var detectedSkinLevel = 3
 
             character.slots.forEach { (category, slot) ->
                 selected[category] = slot.itemId
                 slot.tintColorHex?.let { hex ->
+                    if (category == "body") {
+                        val idx = com.chibidolls.app.core.designsystem.components.SkinTonePalette.TONES.indexOfFirst {
+                            it.hex.equals(hex, ignoreCase = true)
+                        }
+                        if (idx >= 0) detectedSkinLevel = idx
+                    }
                     CharacterLogicHelper.parseHexToColor(hex)?.let { color ->
                         colors[category] = CategoryColorOverride(
                             selectedColor = color,
@@ -90,7 +120,8 @@ data class CharacterState(
 
             return CharacterState(
                 selectedItems = selected,
-                colorOverrides = colors
+                colorOverrides = colors,
+                skinToneLevel = detectedSkinLevel
             )
         }
     }

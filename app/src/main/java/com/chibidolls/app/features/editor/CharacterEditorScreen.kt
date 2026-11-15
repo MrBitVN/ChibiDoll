@@ -1,9 +1,12 @@
 package com.chibidolls.app.features.editor
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import android.widget.Toast
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,41 +17,34 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Casino
-import androidx.compose.material.icons.filled.ColorLens
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.chibidolls.app.core.designsystem.ColorPalettePink
-import com.chibidolls.app.core.designsystem.DiceOrange
-import com.chibidolls.app.core.designsystem.GreenOK
-import com.chibidolls.app.core.designsystem.ResetRed
-import com.chibidolls.app.core.designsystem.ScreenBackground
-import com.chibidolls.app.core.designsystem.components.CuteActionButton
-import com.chibidolls.app.core.designsystem.components.GreenOkButton
-import com.chibidolls.app.features.editor.components.ColorTintSheet
-import com.chibidolls.app.features.editor.components.DollCanvasView
+import com.chibidolls.app.core.designsystem.components.ChibiDollRenderer
+import com.chibidolls.app.core.designsystem.components.VerticalHueSlider
+import com.chibidolls.app.features.editor.components.EditorStudioBackground
 import com.chibidolls.app.features.editor.components.ItemGridPanel
+import com.chibidolls.app.features.editor.components.UnlockPremiumDialog
 
 @Composable
 fun CharacterEditorScreen(
@@ -57,7 +53,7 @@ fun CharacterEditorScreen(
     viewModel: CharacterEditorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var dollNameInput by remember { mutableStateOf("My Chibi Doll") }
+    val context = LocalContext.current
 
     LaunchedEffect(uiState.isSavedSuccess) {
         if (uiState.isSavedSuccess) {
@@ -65,191 +61,232 @@ fun CharacterEditorScreen(
         }
     }
 
+    LaunchedEffect(uiState.userNotificationMessage) {
+        uiState.userNotificationMessage?.let { msg ->
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            viewModel.clearNotificationMessage()
+        }
+    }
+
     if (uiState.isLoading) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(ScreenBackground),
+                .background(Color(0xFF2C134A)),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator(color = GreenOK)
+            CircularProgressIndicator(color = Color(0xFF10B981))
         }
         return
     }
 
+    // Zoom animation: smoothly scale and translate towards face when selecting eyes or mouth (screenshots 5, 6, 7)
+    val zoomScale by animateFloatAsState(
+        targetValue = if (uiState.isFaceZoomed) 1.68f else 1.0f,
+        animationSpec = spring(dampingRatio = 0.75f, stiffness = 380f),
+        label = "zoomScale"
+    )
+    val pedestalAlpha by animateFloatAsState(
+        targetValue = if (uiState.isFaceZoomed) 0.0f else 1.0f,
+        animationSpec = tween(durationMillis = 200),
+        label = "pedestalAlpha"
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(ScreenBackground)
+            .background(Color(0xFF2C134A))
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Top Bar: Back (cam, trên trái) | Group: Reset, Random, Đổi màu, OK (xanh lá, trên phải)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 14.dp, vertical = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Back Button: Orange color on top left
-                CuteActionButton(
-                    icon = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    onClick = onBackClick,
-                    backgroundColor = DiceOrange, // Orange background
-                    iconTint = Color.White
-                )
-
-                // Actions Group on the right: Reset, Random, Color Tint, Green OK
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    CuteActionButton(
-                        icon = Icons.Default.Refresh,
-                        contentDescription = "Reset",
-                        onClick = { viewModel.showResetDialog(true) },
-                        iconTint = ResetRed
-                    )
-
-                    CuteActionButton(
-                        icon = Icons.Default.Casino,
-                        contentDescription = "Random",
-                        onClick = { viewModel.randomizeDoll() },
-                        iconTint = DiceOrange
-                    )
-
-                    CuteActionButton(
-                        icon = Icons.Default.ColorLens,
-                        contentDescription = "Color Tint",
-                        onClick = { viewModel.toggleColorPicker() },
-                        iconTint = ColorPalettePink
-                    )
-
-                    Spacer(modifier = Modifier.width(2.dp))
-
-                    // OK Button: Green on top right
-                    GreenOkButton(
-                        text = "OK",
-                        onClick = { viewModel.showSaveDialog(true) }
-                    )
-                }
-            }
-
-            // Upper Stage: Changeable background + Chibi Doll PNG layer stack (~60% height)
+            // Upper Stage: Studio Room Background + Chibi Doll on Pedestal (~58% height)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .padding(horizontal = 20.dp, vertical = 6.dp),
-                contentAlignment = Alignment.Center
             ) {
-                DollCanvasView(
-                    characterState = uiState.characterState,
-                    catalogItems = uiState.allCatalogItems,
-                    backgroundPattern = uiState.backgroundPattern,
-                    onCycleBackground = { viewModel.cycleBackground() },
-                    modifier = Modifier.fillMaxHeight()
-                )
+                // Background Studio: spotlight, mirror, nightstand
+                EditorStudioBackground()
+
+                // Doll Canvas with 3D Pedestal and Face Zooming
+                Canvas(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    ChibiDollRenderer.drawFullDoll(
+                        drawScope = this,
+                        size = size,
+                        characterState = uiState.characterState,
+                        zoomScale = zoomScale,
+                        pedestalAlpha = pedestalAlpha,
+                        catalogItems = uiState.allCatalogItems,
+                        context = context
+                    )
+                }
+
+                // Top Controls: Back (orange, top-left) and Check (green, top-right)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 14.dp, vertical = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Back Button: Orange circle with white arrow (screenshot 4)
+                    EditorCircleButton(
+                        backgroundColor = Color(0xFFF97316),
+                        onClick = onBackClick
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+
+                    // Check Button: Green circle with white checkmark (screenshot 4)
+                    EditorCircleButton(
+                        backgroundColor = Color(0xFF22C55E),
+                        onClick = { viewModel.saveDirectly(context) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "Save and Return",
+                            tint = Color.White,
+                            modifier = Modifier.size(26.dp)
+                        )
+                    }
+                }
+
+                // Left Column Buttons: Reset (purple) and Random (purple) (screenshot 4)
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 14.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    EditorCircleButton(
+                        backgroundColor = Color(0xFFC084FC),
+                        onClick = { viewModel.resetToDefault() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = "Reset",
+                            tint = Color.White,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
+
+                    EditorCircleButton(
+                        backgroundColor = Color(0xFFC084FC),
+                        onClick = { viewModel.randomizeDoll() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Shuffle,
+                            contentDescription = "Randomize",
+                            tint = Color.White,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
+                }
+
+                // Right Column: Color Wheel (ONLY shown for "body" category - E' spec) + 16-Level Skin Tone Slider
+                if (uiState.isCurrentItemColorable) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(top = 70.dp, end = 14.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        // Color Wheel circular button
+                        Box(
+                            modifier = Modifier
+                                .size(44.dp)
+                                .shadow(6.dp, CircleShape)
+                                .clip(CircleShape)
+                                .background(Color.White)
+                                .clickable { viewModel.toggleVerticalHueSlider() }
+                                .padding(4.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Canvas(modifier = Modifier.fillMaxSize()) {
+                                val r = size.minDimension / 2f
+                                val sweepColors = listOf(
+                                    Color(0xFFFFF7F2), Color(0xFFFFDBCB), Color(0xFFE8B896),
+                                    Color(0xFF8D5524), Color(0xFF3B2219), Color(0xFFE9D5FF), Color(0xFFFFF7F2)
+                                )
+                                drawCircle(
+                                    brush = Brush.sweepGradient(sweepColors),
+                                    radius = r
+                                )
+                                drawCircle(
+                                    color = Color.White,
+                                    radius = r * 0.35f
+                                )
+                            }
+                        }
+
+                        // Vertical 16-Level Skin Tone Slider directly below Color Wheel (E' spec)
+                        if (uiState.showVerticalHueSlider) {
+                            com.chibidolls.app.core.designsystem.components.SkinToneSlider(
+                                currentLevel = uiState.characterState.skinToneLevel,
+                                onLevelChanged = { viewModel.setSkinToneLevel(it) }
+                            )
+                        }
+                    }
+                }
             }
 
-            // Lower Section: Light Blue Rounded Panel with Category Tabs & 4-column Item Grid
+            // Lower Section: Item Grid Panel with Pack Tabs, Category Tabs, and 4-Column Grid
             val equippedItemId = uiState.characterState.getEquippedItemId(uiState.selectedCategoryId)
             ItemGridPanel(
                 categories = uiState.categories,
                 selectedCategoryId = uiState.selectedCategoryId,
+                selectedPackId = uiState.selectedPackId,
                 items = uiState.itemsForSelectedCategory,
                 equippedItemId = equippedItemId,
+                onPackSelected = { viewModel.selectPack(it) },
+                isPackUnlocked = { viewModel.isPackUnlocked(it) },
                 onCategorySelected = { viewModel.selectCategory(it) },
                 onItemEquip = { viewModel.equipItem(it) },
                 onItemUnequip = { viewModel.unequipSlot(uiState.selectedCategoryId) },
+                isItemUnlocked = { viewModel.isItemUnlocked(it) },
+                onLockedItemClick = { viewModel.onLockedItemClick(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(310.dp)
             )
         }
-
-        // Color Picker Floating Bottom Sheet
-        AnimatedVisibility(
-            visible = uiState.showColorPicker,
-            enter = slideInVertically { it },
-            exit = slideOutVertically { it },
-            modifier = Modifier.align(Alignment.BottomCenter)
-        ) {
-            val targetCategory = uiState.categories.find { it.id == uiState.colorTargetCategoryId }
-            val currentOverride = uiState.characterState.getColorOverride(uiState.colorTargetCategoryId)
-
-            ColorTintSheet(
-                targetCategoryId = uiState.colorTargetCategoryId,
-                targetCategoryName = targetCategory?.name ?: "Item",
-                availableColorableCategories = uiState.availableColorableCategories,
-                currentOverride = currentOverride,
-                onCategoryChange = { viewModel.setColorTargetCategory(it) },
-                onColorSwatchSelected = { color, hex ->
-                    viewModel.setCategorySwatchColor(uiState.colorTargetCategoryId, color, hex)
-                },
-                onHueChange = { viewModel.setCategoryHue(uiState.colorTargetCategoryId, it) },
-                onSaturationChange = { viewModel.setCategorySaturation(uiState.colorTargetCategoryId, it) },
-                onResetCategoryColor = { viewModel.resetCategoryColor(uiState.colorTargetCategoryId) },
-                onClose = { viewModel.toggleColorPicker(false) }
-            )
-        }
     }
 
-    // Reset Confirm Dialog
-    if (uiState.showResetDialog) {
-        AlertDialog(
-            onDismissRequest = { viewModel.showResetDialog(false) },
-            title = { Text(text = "Reset Character?") },
-            text = { Text(text = "Are you sure you want to reset all clothes and items to default?") },
-            confirmButton = {
-                Button(
-                    onClick = { viewModel.resetToDefault() },
-                    colors = ButtonDefaults.buttonColors(containerColor = ResetRed)
-                ) {
-                    Text("Reset")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { viewModel.showResetDialog(false) }) {
-                    Text("Cancel")
-                }
-            }
+    // Unlock dialog when tapping locked item
+    uiState.itemToUnlock?.let { item ->
+        UnlockPremiumDialog(
+            item = item,
+            onDismiss = { viewModel.dismissUnlockDialog() },
+            onUnlockConfirmed = { viewModel.confirmUnlock(item) }
         )
     }
+}
 
-    // Save Doll Dialog
-    if (uiState.showSaveDialog) {
-        AlertDialog(
-            onDismissRequest = { viewModel.showSaveDialog(false) },
-            title = { Text(text = "Save Chibi Doll") },
-            text = {
-                Column {
-                    Text(text = "Give your cute doll a name:")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = dollNameInput,
-                        onValueChange = { dollNameInput = it },
-                        singleLine = true,
-                        placeholder = { Text("Sakura Chibi") }
-                    )
-                }
-            },
-            confirmButton = {
-                Button(
-                    onClick = { viewModel.saveDoll(dollNameInput) },
-                    colors = ButtonDefaults.buttonColors(containerColor = GreenOK)
-                ) {
-                    Text("Save & Finish")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { viewModel.showSaveDialog(false) }) {
-                    Text("Cancel")
-                }
-            }
-        )
+@Composable
+private fun EditorCircleButton(
+    backgroundColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .size(46.dp)
+            .shadow(5.dp, CircleShape)
+            .clip(CircleShape)
+            .background(backgroundColor)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        content()
     }
 }

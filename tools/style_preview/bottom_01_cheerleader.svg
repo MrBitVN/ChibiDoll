@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="bottom_cheerleader">
+    <!-- Waistband (Fitted at hips Y=875) -->
+    <path d="M 410 880 C 455 890 569 890 614 880 L 619 910 C 569 920 455 920 405 910 Z"
+          fill="#E11D48" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M 410 895 C 455 903 569 903 614 895" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="7,5"/>
+
+    <!-- Flared Accordion Pleats (6 crisp 3D pleats with alternating light/shadow) -->
+    <!-- Pleat 1 (Far Left) -->
+    <path d="M 405 910 L 380 1015 L 415 1020 L 430 913 Z" fill="#E11D48" stroke="#2D1810" stroke-width="6"/>
+    <!-- Pleat 2 -->
+    <path d="M 430 913 L 415 1020 L 460 1025 L 470 917 Z" fill="#BE123C" stroke="#2D1810" stroke-width="6"/>
+    <!-- Pleat 3 (Center Left) -->
+    <path d="M 470 917 L 460 1025 L 515 1028 L 518 919 Z" fill="#E11D48" stroke="#2D1810" stroke-width="6"/>
+    <!-- Pleat 4 (Center Right) -->
+    <path d="M 518 919 L 515 1028 L 575 1028 L 570 918 Z" fill="#BE123C" stroke="#2D1810" stroke-width="6"/>
+    <!-- Pleat 5 -->
+    <path d="M 570 918 L 575 1028 L 625 1023 L 612 914 Z" fill="#E11D48" stroke="#2D1810" stroke-width="6"/>
+    <!-- Pleat 6 (Far Right) -->
+    <path d="M 612 914 L 625 1023 L 664 1015 L 619 910 Z" fill="#BE123C" stroke="#2D1810" stroke-width="6"/>
+
+    <!-- Bottom Hem Clean Accent Trim -->
+    <path d="M 380 1015 C 455 1035 569 1035 664 1015" fill="none" stroke="#FFFFFF" stroke-width="4.5"/>
+  </g>
+</svg>

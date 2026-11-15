@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="hair_pigtails">
+    <!-- Left Flowing Pigtail Lock -->
+    <path d="M 320 380 C 230 360 170 440 160 540 C 150 640 200 720 240 760 C 255 775 265 740 250 690 C 225 610 230 500 290 420 Z"
+          fill="#5C3A21" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Left Crimson Bow -->
+    <path d="M 285 390 C 260 370 250 400 270 420 Z" fill="#E11D48" stroke="#2D1810" stroke-width="5"/>
+    <path d="M 305 380 C 330 360 340 390 320 410 Z" fill="#E11D48" stroke="#2D1810" stroke-width="5"/>
+    <circle cx="295" cy="395" r="9" fill="#F59E0B" stroke="#2D1810" stroke-width="4"/>
+
+    <!-- Right Flowing Pigtail Lock -->
+    <path d="M 704 380 C 794 360 854 440 864 540 C 874 640 824 720 784 760 C 769 775 759 740 774 690 C 799 610 794 500 734 420 Z"
+          fill="#5C3A21" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Right Crimson Bow -->
+    <path d="M 739 390 C 764 370 774 400 754 420 Z" fill="#E11D48" stroke="#2D1810" stroke-width="5"/>
+    <path d="M 719 380 C 694 360 684 390 704 410 Z" fill="#E11D48" stroke="#2D1810" stroke-width="5"/>
+    <circle cx="729" cy="395" r="9" fill="#F59E0B" stroke="#2D1810" stroke-width="4"/>
+
+    <!-- Main Hair Dome & Cheek-Framing Locks -->
+    <path d="M 330 480
+             C 310 380 370 260 512 260
+             C 654 260 714 380 694 480
+             C 680 500 665 440 650 410
+             C 625 410 620 450 605 450
+             C 585 410 565 410 550 440
+             C 530 410 510 410 497 440
+             C 480 410 460 410 440 440
+             C 425 410 405 410 390 450
+             C 375 450 365 410 340 410
+             C 330 440 320 500 330 480 Z"
+          fill="#5C3A21" stroke="#2D1810" stroke-width="7.5" stroke-linejoin="round"/>
+
+    <!-- Neat Blunt Fringe Cuts -->
+    <path d="M 375 425 L 378 450 M 425 425 L 428 448 M 475 425 L 477 445 M 545 425 L 543 445 M 595 425 L 593 448 M 645 425 L 642 450"
+          fill="none" stroke="#2D1810" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Shiny Arc Highlight -->
+    <path d="M 385 330 C 435 300 585 300 639 330" fill="none" stroke="#F59E0B" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

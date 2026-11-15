@@ -12,6 +12,8 @@ data class CharacterEntity(
     val createdAt: Long,
     val updatedAt: Long,
     val previewImagePath: String?,
+    val tags: List<String> = emptyList(),
+    val bio: String? = null,
     val slots: Map<String, OutfitSlot>
 ) {
     fun toDomain(): Character {
@@ -21,6 +23,8 @@ data class CharacterEntity(
             createdAt = createdAt,
             updatedAt = updatedAt,
             previewImagePath = previewImagePath,
+            tags = tags,
+            bio = bio,
             slots = slots
         )
     }
@@ -33,6 +37,8 @@ data class CharacterEntity(
                 createdAt = domain.createdAt,
                 updatedAt = domain.updatedAt,
                 previewImagePath = domain.previewImagePath,
+                tags = domain.tags,
+                bio = domain.bio,
                 slots = domain.slots
             )
         }

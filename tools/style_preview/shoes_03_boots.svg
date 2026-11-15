@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="shoes_boots">
+    <!-- LEFT BOOT -->
+    <path d="M 390 1195
+             L 475 1195
+             L 485 1265
+             C 485 1295 435 1295 390 1290
+             C 360 1285 350 1250 380 1240
+             L 380 1195 Z"
+          fill="#2D1810" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Gold Buckle Strap across ankle -->
+    <path d="M 382 1220 L 478 1220" fill="none" stroke="#5C3A21" stroke-width="9"/>
+    <rect x="420" y="1212" width="22" height="16" rx="4" fill="#F59E0B" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Yellow Welt Stitching & Chunky Lug Sole -->
+    <path d="M 355 1280 C 400 1298 450 1298 485 1285" fill="none" stroke="#F59E0B" stroke-width="4" stroke-dasharray="5,4"/>
+    <path d="M 352 1290 L 485 1290 L 480 1302 L 358 1302 Z" fill="#5C3A21" stroke="#2D1810" stroke-width="4"/>
+
+    <!-- RIGHT BOOT -->
+    <path d="M 549 1195
+             L 634 1195
+             L 644 1265
+             C 644 1295 594 1295 549 1290
+             C 519 1285 509 1250 539 1240
+             L 539 1195 Z"
+          fill="#2D1810" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Gold Buckle Strap across ankle -->
+    <path d="M 541 1220 L 637 1220" fill="none" stroke="#5C3A21" stroke-width="9"/>
+    <rect x="579" y="1212" width="22" height="16" rx="4" fill="#F59E0B" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Yellow Welt Stitching & Chunky Lug Sole -->
+    <path d="M 514 1280 C 559 1298 609 1298 644 1285" fill="none" stroke="#F59E0B" stroke-width="4" stroke-dasharray="5,4"/>
+    <path d="M 511 1290 L 644 1290 L 639 1302 L 517 1302 Z" fill="#5C3A21" stroke="#2D1810" stroke-width="4"/>
+  </g>
+</svg>

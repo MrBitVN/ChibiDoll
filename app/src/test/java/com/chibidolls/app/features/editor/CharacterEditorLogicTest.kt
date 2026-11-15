@@ -244,27 +244,29 @@ class CharacterEditorLogicTest {
 
     @Test
     fun testColorOverrideApplication() {
-        val customPink = Color(0xFFFF69B4)
+        // Under requirement E', only "body" receives ColorMatrix (based on skinToneLevel).
+        // Other categories (hair, top, etc.) do NOT receive colorFilter.
         val state = CharacterState(
-            selectedItems = mapOf("hair" to "hair_twin_tails"),
-            colorOverrides = mapOf(
-                "hair" to CategoryColorOverride(
-                    selectedColor = customPink,
-                    selectedHex = "#FF69B4",
-                    hue = 45f,
-                    saturation = 1.2f
-                )
-            )
+            selectedItems = mapOf(
+                "body" to "body_fair",
+                "hair" to "hair_twin_tails"
+            ),
+            skinToneLevel = 4
         )
 
         val resolved = CharacterLogicHelper.resolveSortedLayers(state, mockCatalog.items)
-        assertEquals(2, resolved.size)
+        assertEquals(3, resolved.size) // hair_back (250), body (300), hair_front (700)
 
-        // Both hair_back and hair_front should receive the colorFilter and colorTint
-        assertNotNull(resolved[0].colorFilter)
-        assertNotNull(resolved[1].colorFilter)
-        assertEquals(customPink, resolved[0].colorTint)
-        assertEquals(customPink, resolved[1].colorTint)
+        val bodyLayer = resolved.first { it.slot == "body" }
+        val hairLayers = resolved.filter { it.slot.startsWith("hair") }
+
+        // Body layer must receive the ColorFilter
+        assertNotNull(bodyLayer.colorFilter)
+
+        // Hair layers must NOT receive runtime colorFilter (colorable = false per requirement E')
+        hairLayers.forEach {
+            assertNull(it.colorFilter)
+        }
     }
 
     @Test

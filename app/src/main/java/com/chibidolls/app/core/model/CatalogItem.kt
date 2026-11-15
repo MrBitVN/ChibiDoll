@@ -2,10 +2,25 @@ package com.chibidolls.app.core.model
 
 import com.google.gson.annotations.SerializedName
 
+data class SeasonalPack(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("title") val title: String = name,
+    @SerializedName("description") val description: String = "",
+    @SerializedName("bannerGradientStart") val bannerGradientStart: String = "#FF7E5F",
+    @SerializedName("bannerGradientEnd") val bannerGradientEnd: String = "#FEB47B",
+    @SerializedName("badgeText") val badgeText: String = "Mùa lễ hội",
+    @SerializedName("iconEmoji") val iconEmoji: String = "🎃",
+    @SerializedName("season") val season: String = "HALLOWEEN",
+    @SerializedName("itemIds") val itemIds: List<String> = emptyList(),
+    @SerializedName("isPremium") val isPremium: Boolean = false
+)
+
 data class CatalogResponse(
     @SerializedName("version") val version: Int = 1,
     @SerializedName("categories") val categories: List<Category> = emptyList(),
-    @SerializedName("items") val items: List<CatalogItem> = emptyList()
+    @SerializedName("items") val items: List<CatalogItem> = emptyList(),
+    @SerializedName("seasonalPacks") val seasonalPacks: List<SeasonalPack> = emptyList()
 )
 
 data class Category(
@@ -33,6 +48,7 @@ data class CatalogItem(
     @SerializedName("colorable") val colorable: Boolean = false,
     @SerializedName("defaultColorHex") val defaultColorHex: String? = null,
     @SerializedName("tags") val tags: List<String> = emptyList(),
+    @SerializedName("packId") val packId: String? = "basic",
     @SerializedName("isPremium") val isPremium: Boolean = false
 ) {
     /**

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <defs>
+    <!-- Gingham Pattern Tile -->
+    <pattern id="ginghamCheck" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="#FFFFFF"/>
+      <rect width="10" height="20" fill="#C084FC" opacity="0.45"/>
+      <rect width="20" height="10" fill="#C084FC" opacity="0.45"/>
+    </pattern>
+  </defs>
+  <g id="bottom_gingham">
+    <!-- Top Tier Skirt Body with Gingham Check -->
+    <path d="M 410 890
+             C 455 900 569 900 614 890
+             L 634 970
+             C 569 985 455 985 390 970 Z"
+          fill="url(#ginghamCheck)" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+
+    <!-- Scalloped Lower Frill Tier -->
+    <path d="M 390 965
+             C 410 985 430 985 450 970
+             C 470 985 490 985 510 970
+             C 530 985 550 985 570 970
+             C 590 985 610 985 630 970
+             C 650 985 665 980 670 965
+             L 680 1005
+             C 569 1030 455 1030 365 1005 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="6.5" stroke-linejoin="round"/>
+
+    <!-- Cute Center Ribbon Bow at Waist -->
+    <circle cx="512" cy="900" r="7" fill="#6D28D9" stroke="#2D1810" stroke-width="3"/>
+    <path d="M 505 900 C 485 885 480 915 505 905 Z" fill="#6D28D9" stroke="#2D1810" stroke-width="3"/>
+    <path d="M 519 900 C 539 885 544 915 519 905 Z" fill="#6D28D9" stroke="#2D1810" stroke-width="3"/>
+  </g>
+</svg>

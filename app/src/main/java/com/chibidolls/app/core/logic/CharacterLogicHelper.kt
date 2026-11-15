@@ -150,8 +150,13 @@ object CharacterLogicHelper {
             if (!itemId.isNullOrEmpty()) {
                 val item = itemsById[itemId]
                 if (item != null) {
-                    val override = characterState.colorOverrides[category]
-                    val colorFilter = if (item.colorable) override?.toColorFilter() else null
+                    val colorFilter = if (category == "body") {
+                        ColorFilter.colorMatrix(
+                            com.chibidolls.app.core.designsystem.components.SkinTonePalette.getColorMatrix(characterState.skinToneLevel)
+                        )
+                    } else {
+                        null
+                    }
                     val resolved = item.resolvedLayers()
                     resolved.forEach { layer ->
                         layers.add(
@@ -160,7 +165,7 @@ object CharacterLogicHelper {
                                 file = layer.file,
                                 zOrder = layer.zOrder,
                                 colorFilter = colorFilter,
-                                colorTint = override?.selectedColor
+                                colorTint = null
                             )
                         )
                     }

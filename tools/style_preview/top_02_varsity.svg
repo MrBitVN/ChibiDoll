@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="top_varsity">
+    <!-- Main White Cropped Tank Body -->
+    <path d="M 455 725
+             C 430 760 415 800 415 875
+             C 460 885 564 885 609 875
+             C 609 800 594 760 569 725
+             C 545 735 479 735 455 725 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+
+    <!-- Ribbed Red Neckline Trim -->
+    <path d="M 468 725 C 485 755 539 755 556 725" fill="none" stroke="#E11D48" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 472 723 C 488 750 536 750 552 723" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+
+    <!-- Red Armhole Ribbing -->
+    <path d="M 455 725 C 430 760 418 790 415 820" fill="none" stroke="#E11D48" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 569 725 C 594 760 606 790 609 820" fill="none" stroke="#E11D48" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- Bold Red Screenprint '#23' with clean athletic style -->
+    <!-- Number '2' -->
+    <path d="M 474 800 C 474 785 492 780 500 793 C 506 803 484 820 474 833 L 506 833"
+          fill="none" stroke="#E11D48" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Number '3' -->
+    <path d="M 522 787 L 548 787 L 534 807 C 546 807 552 815 550 825 C 546 835 532 835 522 830"
+          fill="none" stroke="#E11D48" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Bottom Cropped Hem Seam -->
+    <path d="M 415 870 C 460 880 564 880 609 870" fill="none" stroke="#E11D48" stroke-width="6"/>
+  </g>
+</svg>

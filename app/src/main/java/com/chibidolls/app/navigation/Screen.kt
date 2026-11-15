@@ -3,16 +3,16 @@ package com.chibidolls.app.navigation
 sealed class Screen(val route: String) {
     data object Splash : Screen("splash")
     data object Home : Screen("home")
-    data object CharacterEditor : Screen("editor?characterId={characterId}") {
-        fun createRoute(characterId: String? = null): String {
-            return if (characterId != null) "editor?characterId=$characterId" else "editor"
+    data object Room : Screen("room")
+    data object CharacterEditor : Screen("editor?slotIndex={slotIndex}&characterId={characterId}") {
+        fun createRoute(slotIndex: Int = 0, characterId: String? = null): String {
+            return if (characterId != null) {
+                "editor?slotIndex=$slotIndex&characterId=$characterId"
+            } else {
+                "editor?slotIndex=$slotIndex"
+            }
         }
     }
-    data object SceneEditor : Screen("scene?sceneId={sceneId}") {
-        fun createRoute(sceneId: String? = null): String {
-            return if (sceneId != null) "scene?sceneId=$sceneId" else "scene"
-        }
-    }
-    data object Collection : Screen("collection")
+    data object Album : Screen("album")
     data object Settings : Screen("settings")
 }

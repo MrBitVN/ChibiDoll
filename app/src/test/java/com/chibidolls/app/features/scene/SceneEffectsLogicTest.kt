@@ -48,13 +48,16 @@ class SceneEffectsLogicTest {
         val system = SceneParticleSystem()
         system.setup(1000f, 1500f, ParticleDensity.HIGH)
 
-        val initialY = system.particles.first { it.type == ParticleType.BUBBLE }.y
+        val bubble = system.particles.first { it.type == ParticleType.BUBBLE }
+        bubble.life = 0f
+        bubble.y = 800f
+        val initialY = bubble.y
         // Simulate 0.5s elapsed
         system.update(0.5f)
-        val afterY = system.particles.first { it.type == ParticleType.BUBBLE }.y
+        val afterY = bubble.y
 
         // Bubbles float upwards (negative vy)
-        assertTrue("Bubble should rise upwards", afterY <= initialY)
+        assertTrue("Bubble should rise upwards", afterY < initialY)
     }
 
     @Test

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="top_sweater">
+    <!-- Puffy Knit Sleeves (covering toddler upper arms) -->
+    <!-- Left Sleeve -->
+    <path d="M 425 720 C 375 735 345 785 340 855 C 345 880 380 885 400 870 C 410 825 425 785 435 740 Z"
+          fill="#93C5FD" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M 345 865 C 360 875 385 870 400 860" fill="none" stroke="#FB7185" stroke-width="6"/>
+
+    <!-- Right Sleeve -->
+    <path d="M 599 720 C 649 735 679 785 684 855 C 679 880 644 885 624 870 C 614 825 599 785 589 740 Z"
+          fill="#93C5FD" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M 679 865 C 664 875 639 870 624 860" fill="none" stroke="#FB7185" stroke-width="6"/>
+
+    <!-- Main Oversized Torso Sweater Body with gathering folds -->
+    <path d="M 435 720
+             C 390 765 385 835 395 905
+             C 445 925 579 925 629 905
+             C 639 835 634 765 589 720
+             C 560 735 464 735 435 720 Z"
+          fill="#93C5FD" stroke="#2D1810" stroke-width="7.5" stroke-linejoin="round"/>
+
+    <!-- Pink Peter Pan Collar -->
+    <!-- Left Leaf -->
+    <path d="M 512 725 C 475 705 435 715 440 745 C 445 765 490 770 512 735 Z"
+          fill="#FB7185" stroke="#2D1810" stroke-width="6" stroke-linejoin="round"/>
+    <!-- Right Leaf -->
+    <path d="M 512 725 C 549 705 589 715 584 745 C 579 765 534 770 512 735 Z"
+          fill="#FB7185" stroke="#2D1810" stroke-width="6" stroke-linejoin="round"/>
+
+    <!-- Big Center Applique Embroidered Heart -->
+    <path d="M 512 805
+             C 485 770 440 785 450 820
+             C 460 850 500 870 512 885
+             C 524 870 564 850 574 820
+             C 584 785 539 770 512 805 Z"
+          fill="#E11D48" stroke="#2D1810" stroke-width="6" stroke-linejoin="round"/>
+    <!-- Heart outline stitch -->
+    <path d="M 512 811 C 490 780 452 792 460 821 C 468 845 502 863 512 875 C 522 863 556 845 564 821 C 572 792 534 780 512 811 Z"
+          fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-dasharray="5,4"/>
+
+    <!-- Bottom Hem Ribbing Folds -->
+    <path d="M 400 900 C 450 915 574 915 624 900" fill="none" stroke="#FB7185" stroke-width="8"/>
+    <path d="M 440 900 L 440 915 M 480 903 L 480 918 M 544 903 L 544 918 M 584 900 L 584 915"
+          fill="none" stroke="#2D1810" stroke-width="3"/>
+  </g>
+</svg>

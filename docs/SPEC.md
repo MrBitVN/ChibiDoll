@@ -112,134 +112,149 @@ Phong cách thị giác: **Pastel Dream / Kawaii Chibi**, với các góc bo tr�
 ## 4. CHI TIẾT CÁC MÀN HÌNH & LUỒNG ĐIỀU HƯỚNG (SCREENS & FLOWS)
 
 ```
-[Splash Screen]
-      │
-      ▼
-[Home Screen] ──────────────────────────┬────────────────────────┐
-      │                                 │                        │
-      ▼                                 ▼                        ▼
-[Character Editor]               [Scene Studio]            [Collection]
- (Tạo & Tùy biến Doll)          (Ghép búp bê & cảnh)     (Kho búp bê đã lưu)
-      │                                 │                        │
-      └─────────► [Save / OK] ──────────┘                        │
-                        │                                        │
-                        └────────────────────────────────────────┘
+[Home Screen] (Halloween Theme)
+      ├── (Play - Đỏ) ─────────► [Room Screen] (Màn Trung Tâm)
+      │                                ├── (Bút chì / "+") ──► [Character Editor] ──► (Check) ──┐
+      │                                ├── (Nút hồng) ──────► [Album Screen]                   │
+      │                                └── (Back cam) ──────► [Home Screen]                    │
+      ├── (Shop - Xanh dương) ─► [Shop Stub Modal/Dialog]                                     │
+      └── (Settings - Hồng) ───► [Settings Screen]                                             │
+                                       ▲                                                       │
+                                       └───────────────────────────────────────────────────────┘
 ```
 
-### 4.1. Màn hình Splash (Splash Screen)
-* **Nhiệm vụ**: Khởi tạo ứng dụng, tải file `catalog.json` vào RAM/Cache, khởi tạo database Room/SwiftData, kiểm tra phiên bản.
-* **Bố cục UI**:
-  * Logo Chibi Dolls hoạt họa dễ thương nằm giữa màn hình.
-  * Hiệu ứng lấp lánh (Sparkle particles) bay xung quanh logo.
-  * Thanh Loading bar bo tròn dạng kẹo ngọt với tỉ lệ phần trăm tải tài nguyên.
-* **Thời gian chuyển cảnh**: Tối đa `1.5s - 2s` hoặc ngay khi đọc xong catalog.json. Tự động chuyển mượt vào màn `Home`.
+### 4.1. Màn hình chính (Home Screen)
+* **Chủ đề thị giác**: Nền full màn hình chủ đề Halloween (lâu đài u ám, trăng tròn, bí ngô, sương mù; placeholder sạch nếu chưa có ảnh), logo 3D "Chibi Dolls" ở giữa trên, các búp bê Chibi với chuyển động thở/idle nhẹ nhàng bên dưới.
+* **Nút bấm chính**:
+  1. **Nút Play (Đỏ)**: Hình tròn lớn màu đỏ, biểu tượng tam giác Play màu trắng, viền bóng nổi 3D kẹo ngọt ➔ Điều hướng sang **Room Screen**.
+  2. **Nút Shop (Xanh dương)**: Hình tròn lớn màu xanh dương, biểu tượng giỏ hàng màu trắng ➔ Mở **Shop Stub**.
+  3. **Nút Settings (Hồng)**: Góc trên bên phải màn hình, icon bánh răng màu trắng trên nền tròn hồng pastel ➔ Điều hướng sang **Settings Screen**.
 
-### 4.2. Màn hình chính (Home Screen)
-* **Bố cục UI**:
-  * **Top Bar**: Icon Cài đặt (Settings ⚙️) góc trên bên phải, Nút Bật/Tắt Nhạc nền (BGM 🎵).
-  * **Center Stage**: Nhân vật Chibi hoạt hình chào đón (vẫy tay nhẹ nhàng bằng animation lặp vô tận).
-  * **Main Action Buttons** (Menu chính dạng card bong bóng pastel nổi bật):
-    1. **Nút "Create Doll" / "Tạo Búp Bê"** (Nút to nhất, màu gradient hồng-tím hoặc xanh tươi sáng, biểu tượng cây cọ vẽ hoặc búp bê): Mở Character Editor với một búp bê mặc định mới.
-    2. **Nút "Scene Studio" / "Phòng Chụp Ảnh"** (Màu vàng pastel, icon khung tranh): Mở màn Scene Editor.
-    3. **Nút "My Dolls" / "Bộ Sưu Tập"** (Màu xanh mint, icon tủ quần áo / album): Xem danh sách các búp bê đã lưu.
-    4. **Nút "Random Dress" / "Ngẫu Nhiên"** (Icon xúc xắc mini): Tạo nhanh một búp bê ngẫu nhiên và mở thẳng vào Editor.
+### 4.2. Màn hình trung tâm: Căn phòng búp bê (Room Screen)
+Màn hình trung tâm tương tác giữa búp bê và không gian phòng.
+
+#### A. Nửa trên màn hình: Sân khấu Căn phòng (Room Stage)
+* **Không gian**:
+  * Tường phòng (Wall pattern - có thể đổi qua category tường).
+  * Sàn gỗ / gạch (Floor - có thể đổi qua category sàn).
+  * Đồ nội thất (giường, sofa, bàn...) đã được đặt.
+  * Các búp bê đã chọn đứng trong phòng, hỗ trợ **kéo thả (drag & drop)** tự do trong không gian phòng.
+* **Nút điều hướng & công cụ**:
+  * **Nút Back (Cam, góc trái trên)**: Quay lại Home Screen.
+  * **Cột nút bên phải**:
+    * **Nút Camera (Xanh dương)**: Chụp nhanh toàn bộ phòng (tường + sàn + doll + nội thất) và lưu thành một thẻ trong **Album**.
+    * **Nút Reset (Tím)**: Đưa phòng về trạng thái mặc định ban đầu.
+    * **Nút Album (Hồng)**: Mở ngay màn hình **Album**.
+
+#### B. Panel nửa dưới màn hình: 2 Tab Dạng "Sách" Nghiêng Nhẹ
+Panel dưới gồm 2 tab lớn tạo hình thẻ sách nghiêng nhẹ:
+1. **Tab Xanh lá (Icon người dấu + - Quản lý Búp bê & Slot)**:
+   * Lưới 2 cột chứa danh sách **Character Slots** (tối đa 4 slot miễn phí + các slot khóa premium).
+   * **Slot 1 (Mặc định)**: Ngay lần đầu mở app, slot 1 luôn có sẵn 1 búp bê mặc định (body, mặt, mắt, miệng, tóc và đồ lót) và đứng trong phòng.
+   * **Slot có búp bê**: Hiển thị ảnh chân dung/đầu búp bê. Nhấn vào card để đặt búp bê vào/ra khỏi phòng. Nút tròn hình bút chì bên cạnh mở thẳng vào **Character Editor** để chỉnh sửa búp bê đó.
+   * **Slot "+"**: Tạo búp bê mới, mở **Character Editor** với búp bê mặc định.
+   * **Slot khóa (Premium)**: Có biểu tượng ổ khóa xanh/đỏ; nhấn vào sẽ mở **Shop Stub**.
+2. **Tab Xanh dương (Icon ngôi nhà - Trang trí Nội thất & Căn phòng)**:
+   * **Hàng Category cuộn ngang**: 5 icon danh mục: Tường (`wall`), Sàn (`floor`), Giường (`bed`), Sofa (`sofa`), Bàn (`table`). Category đang chọn được tô màu xanh đặc.
+   * **Lưới 4 cột item bên dưới**: Hiển thị các mẫu hoa văn/nội thất tương ứng. Bấm item áp dụng ngay lập tức vào phòng theo thời gian thực; item đang chọn có viền sáng/highlight.
 
 ### 4.3. Màn hình biên tập nhân vật (Character Editor Screen)
-Đây là màn hình quan trọng nhất của ứng dụng.
+Màn hình tùy biến chi tiết từng bộ phận và trang phục búp bê.
 
-#### A. Phân bổ bố cục (Layout Structure)
-Màn hình được chia làm 2 phần chính theo chiều dọc:
-1. **Phần trên (Upper Stage - 60% - 62% chiều cao màn hình)**: Khung vẽ búp bê (Doll Preview Stage).
-2. **Phần dưới (Lower Panel - 38% - 40% chiều cao màn hình)**: Panel tùy chọn đồ đạc màu xanh nhạt bo góc (`#E0F2FE`).
+#### A. Không gian Stage & Thanh công cụ
+* **Nền**: Phòng thử đồ màu tím mộng mơ (`#2E1065` / `#3B0764`), đèn spotlight chiếu thẳng từ trên xuống, gương đứng viền tím và tủ đồ phía sau, búp bê đứng toàn thân trên bệ tròn 3D.
+* **Thanh điều khiển**:
+  * **Back (Cam, góc trái trên)**: Thoát khỏi Editor mà không lưu thay đổi, quay lại Room Screen.
+  * **Check (Xanh lá, góc phải trên)**: Lưu búp bê vào CharacterSlot tương ứng (kèm thumbnail chân dung) và quay lại Room Screen.
+  * **Reset (Tím, góc trái dưới Back)**: Trả búp bê về trạng thái ban đầu mặc định.
+  * **Random (Tím, dưới Reset)**: Phối ngẫu nhiên một bộ búp bê hợp lệ (body + mắt + miệng + tóc + đồ mặc).
+  * **Bánh xe màu (Color Wheel, góc phải dưới nút Check)**:
+    * **Chỉ hiển thị khi đang ở category Màu da / Cơ thể (`body`)**: Mọi category khác (mắt, lông mày, miệng, má hồng, tóc, áo, quần/váy, giày, mũ, kính, phụ kiện) KHÔNG hiện bánh xe màu (colorable = false, không mask runtime).
+    * Khi bấm bánh xe: Hiển thị một **thanh trượt 16 mức tông da dọc (Vertical Skin Tone Slider)** (từ sáng đến đậm, bổ sung tông fantasy: Lilac Elf, Mint Fairy, Sky Angel). Kéo trượt hoặc chạm thanh này sẽ lập tức đổi màu da toàn bộ layer cơ thể (body, head, tay, chân) theo thời gian thực bằng ColorMatrix, giữ nguyên đường viền outline và highlight, không decode lại bitmap. Bấm lại bánh xe hoặc đổi sang category khác thì ẩn thanh trượt.
 
-#### B. Chi tiết phần trên (Doll Preview Stage)
-* **Top Header (Thanh công cụ trên cùng)**:
-  * Bên trái:
-    * **Nút Back (⬅️)**: Biểu tượng mũi tên bo tròn. Nếu có thay đổi chưa lưu, hiển thị dialog xác nhận: *"Bạn có muốn thoát mà không lưu bé búp bê này?"*.
-  * Bên phải (Hàng nút công cụ nổi bật):
-    * **Nút Reset (🔄 hoặc 🗑️)**: Trả búp bê về trạng thái ban đầu mặc định (có confirm popup).
-    * **Nút Randomize (🎲)**: Biểu tượng xúc xắc màu cam pastel. Khi bấm, xúc xắc quay 360 độ và chọn ngẫu nhiên một bộ outfit hoàn chỉnh từ catalog.
-    * **Nút Đổi màu (🎨 Color Tint)**: Biểu tượng bảng màu. Bật hộp thoại/sheet chọn màu cho category đang được chọn (nếu item hỗ trợ `colorable = true`).
-    * **Nút OK (Hoàn thành - ✅)**: Nút hình viên thuốc màu xanh lá cây (`#22C55E`), có viền nổi nhẹ và icon checkmark màu trắng. Bấm vào sẽ mở màn hình đặt tên búp bê, lưu vào Database và chuyển đến màn hình Collection hoặc Scene Studio.
-* **Khu vực hiển thị nhân vật**:
-  * Canvas tỉ lệ chuẩn `1024 x 1536`, tự động co dãn theo cơ chế `FitCenter` trong không gian khả dụng.
-  * Nền stage có thể chuyển đổi giữa nền trong suốt ô cờ caro (checkerboard), nền trắng studio, hoặc một hình nền pastel đơn giản.
-  * Các layer PNG được xếp chồng tự động theo thứ tự `zOrder`.
-  * Hỗ trợ chạm vào búp bê để kích hoạt animation chớp mắt hoặc nhún nhảy nhẹ.
+#### B. Cơ chế Camera Zoom & Thumbnail Đặc Biệt
+* **Camera Zoom tự động**:
+  * Khi chọn danh mục **Mắt (`eyes`)** hoặc **Miệng (`mouth`)**: Camera tự động phóng to (zoom in) mượt mà vào khuôn mặt búp bê, ẩn bệ tròn đứng.
+  * Khi chuyển sang các danh mục trang phục toàn thân (áo, quần, váy, giày...): Camera tự động zoom out về chế độ hiển thị toàn thân cùng bệ tròn.
+* **Thumbnail đặc biệt**:
+  * Các thumbnail trong danh mục **Mắt**, **Lông mày**, **Má hồng** và **Miệng** được render trực tiếp trên một khuôn mặt mẫu chibi chuẩn để người dùng dễ hình dung vị trí và biểu cảm.
 
-#### C. Chi tiết phần dưới (Item Selector Panel)
-* **Giao diện Panel**:
-  * Màu nền: Xanh ngọc nhạt dịu mát (`#E0F2FE`), viền trên bo góc lớn `28dp`.
-  * Có đổ bóng nhẹ phía trên (`elevation: 8dp` / `shadow radius: 10`).
-* **Hàng Tab Danh Mục (Category Tabs Bar)**:
-  * Nằm sát mép trên của panel, hỗ trợ vuốt cuộn ngang (Horizontal Scroll).
-  * Danh sách tab theo thứ tự:
-    `[Skin/Body]` ➔ `[Eyes]` ➔ `[Eyebrows]` ➔ `[Mouth]` ➔ `[Hair]` ➔ `[Tops]` ➔ `[Bottoms]` ➔ `[Shoes]` ➔ `[Jackets]` ➔ `[Glasses]` ➔ `[Hats]` ➔ `[Accessories]` ➔ `[Bags]`
-  * Mỗi tab gồm icon đại diện trực quan + tên danh mục ngắn gọn.
-  * Trạng thái active: Tab được chọn có nền trắng bo tròn nổi bật, icon đổi màu xanh biển đậm (`#0284C7`), thanh underline trượt theo.
-* **Lưới Hiển Thị Item (Item Grid)**:
-  * Chiếm toàn bộ phần còn lại của Panel dưới.
-  * Dạng lưới cuộn dọc (LazyVerticalGrid trên Compose / LazyVGrid trên SwiftUI) với 3 hoặc 4 cột tùy chiều rộng màn hình.
-  * **Ô đầu tiên (Slot 0)** luôn là nút **"Bỏ chọn / None (🚫)"** để người dùng gỡ bỏ trang phục khỏi slot đó (ngoại trừ các slot bắt buộc như `body`).
-  * **Các ô Item tiếp theo**:
-    * Card vuông góc bo `16dp`, nền trắng (`#FFFFFF`).
-    * Hiển thị ảnh thu nhỏ (thumbnail) của item.
-    * Khi item đang được mặc trên búp bê: Viền card chuyển sang màu xanh dương đậm hoặc vàng nổi bật, có icon checkmark nhỏ ở góc.
-    * Nếu item là premium: Có biểu tượng ổ khóa hoặc vương miện nhỏ ở góc trên bên phải.
-* **Bộ chọn màu sắc (Color Tint Sheet)**:
-  * Khi bấm nút Palette hoặc tab hỗ trợ đổi màu (như da, tóc, mắt, áo thun cơ bản):
-  * Mở một thanh cuộn ngang chứa các chấm màu pastel định sẵn (Pastel Swatches: 16 màu phổ biến như vàng óng, nâu hạt dẻ, hồng pastel, xanh mint, tím lavender, đen mun, bạch kim,...).
-  * Bổ sung thanh trượt Hue Slider để tự do chọn màu sắc theo sở thích.
+#### C. Phân bổ Pack & Số lượng Item (Yêu cầu C' & E')
+* **Không pack nào bị khóa**: Mọi pack (Basic ⭐, Sách 📖, Halloween 🎃, Princess 👑, Winter ❄️, K-pop 🎤, Jewelry 💍) đều mở khóa và có sẵn nội dung đầy đủ.
+* **Số lượng Item tối thiểu** (pre-generated assets, không đổi màu lúc chạy):
+  * Mức tông da: 16 mức qua thanh trượt.
+  * Mắt: >= 40 items.
+  * Lông mày: >= 10 items.
+  * Miệng: >= 24 items.
+  * Má hồng: >= 6 items.
+  * Tóc: >= 60 items (tách tóc trước `hair_front` và tóc sau `hair_back`).
+  * Áo / Đầm: >= 60 items.
+  * Quần / Chân váy: >= 50 items.
+  * Giày: >= 30 items.
+  * Mũ: >= 20 items.
+  * Kính: >= 15 items.
+  * Phụ kiện: >= 20 items.
+* **Random & Variant Counter (Yêu cầu G')**:
+  * **VariantCounter**: Tính tích số các lựa chọn hợp lệ của từng slot (tính cả trường hợp không chọn với các slot tùy chọn như mũ, kính, phụ kiện, má hồng, giày). Tổng số biến thể đo được vượt xa ngưỡng yêu cầu >= 10,000,000,000 (thực tế > 3.8 x 10^16). In tổng số biến thể vào log ở bản debug.
+  * **Constrained Random**: Ngẫu nhiên tất cả slot bao gồm cả mức tông da (0..15), tuân thủ ràng buộc trang phục (đầm liền thân `dress` không mặc kèm quần/chân váy rời), kết quả ngẫu nhiên luôn khác trạng thái hiện tại. Đảm bảo 1.000 lần random cho >= 990 kết quả khác nhau.
 
-### 4.4. Màn hình dàn cảnh (Scene Editor Screen)
-* **Mục tiêu**: Cho phép người chơi xếp 1 hoặc nhiều búp bê đã tạo vào một bối cảnh hoàn chỉnh, thêm sticker, thú cưng, đồ đạc và chữ để chụp ảnh chia sẻ.
-* **Bố cục UI**:
-  * **Stage hiển thị chính**:
-    * Khung canvas lớn, hỗ trợ chọn hình nền (`background`).
-    * Cho phép thêm tối đa 4 búp bê từ danh sách đã lưu.
-    * Cho phép thêm các vật phẩm: Bàn ghế (`furniture`), Thú cưng (`pet`), Bong bóng thoại (`speech_bubble`), Hiệu ứng lấp lánh (`effect`).
-  * **Thao tác tương tác trên Stage**:
-    * Kéo thả (Drag) để di chuyển vị trí.
-    * Thu phóng 2 ngón (Pinch-to-zoom) để thay đổi kích thước từng búp bê/sticker.
-    * Xoay 2 ngón (Rotation).
-    * Nút lật ngang (Mirror Flip horizontal) để búp bê nhìn sang trái hoặc phải.
-    * Nút điều chỉnh lớp (Bring Forward / Send Backward).
-  * **Bottom Bar**:
-    * Tab chọn búp bê đã lưu.
-    * Tab chọn Background.
-    * Tab chọn Thú cưng & Nội thất.
-    * Tab chèn chữ / Lời thoại dễ thương.
-  * **Top Action Bar**:
-    * Nút Back.
-    * Nút Chụp ảnh / Xuất file PNG (Save to Gallery / Share).
+#### D. Panel tùy chọn 3 tầng
+1. **Tầng 1 (Hàng Tab Nhóm / Pack cuộn ngang)**:
+   * Thẻ tab cuộn ngang: Basic (ngôi sao ⭐), Sách (📖), và các Pack chủ đề: Halloween 🎃, Princess 👑, Winter ❄️, K-pop 🎤, Jewelry 💍...
+   * Mọi pack đều có nội dung và không pack nào khóa.
+2. **Tầng 2 (Hàng Tab Category cuộn ngang)**:
+   * Body/Màu da (`body`), Mắt (`eyes`), Lông mày (`eyebrows`), Miệng (`mouth`), Má hồng (`blush`), Tóc (`hair`), Áo (`top`), Quần/Váy (`bottom`), Giày (`shoes`), Kính (`glasses`), Mũ (`hat`), Phụ kiện (`accessory`)...
+3. **Tầng 3 (Lưới 4 cột Item)**:
+   * Đối với đồ mặc hoặc phụ kiện: Ô đầu tiên luôn là nút **"Bỏ chọn" (🚫 - vòng tròn gạch chéo)**.
+   * Item đang được chọn có viền màu sáng nổi bật.
+   * Khi chạm vào item: Áp dụng ngay lên búp bê với animation nảy nhẹ (scale bounce).
 
-### 4.5. Màn hình bộ sưu tập (Collection / Gallery Screen)
-* **Bố cục UI**:
-  * Chuyển đổi giữa 2 tab: **"Búp bê của tôi" (My Dolls)** và **"Cảnh đã chụp" (Saved Scenes)**.
-  * Hiển thị lưới 2 cột các tác phẩm đã lưu.
-  * Mỗi card hiển thị: Ảnh preview, tên búp bê, ngày tạo.
-  * Nút menu 3 chấm hoặc nút bấm nhanh trên card:
-    * Chỉnh sửa lại (Edit trong Editor).
-    * Nhân bản (Duplicate).
-    * Xóa (Delete - có xác nhận).
-    * Chia sẻ ảnh (Share image).
-  * Nút nổi FAB hình dấu cộng `+` màu xanh lá để tạo nhanh búp bê mới.
-  * Empty State: Hình ảnh chú thỏ chibi buồn ngủ với thông điệp: *"Bạn chưa có búp bê nào. Hãy nhấn nút + để tạo bé đầu tiên nhé!"*.
+### 4.4. Màn hình Album (Album Screen)
+* **Chủ đề**: Nền caro xanh nhạt pastel (Light Blue Gingham). Nút Back màu cam bo tròn ở góc trái trên để quay lại Room Screen.
+* **Lưới 2 cột thẻ ảnh Polaroid**:
+  * Các thẻ ảnh màu trắng mô phỏng ảnh chụp lấy liền Polaroid, mỗi thẻ được ghim cố định bằng một chiếc đinh đỏ tròn 3D trên mép, thẻ hơi nghiêng ngẫu nhiên (-3° đến +3°) tạo cảm giác tự nhiên.
+  * **Thẻ đã lưu**: Hiển thị ảnh chụp căn phòng hoàn chỉnh. Bên dưới ảnh có 2 nút:
+    * **Nút Sửa (Icon bút chì)**: Mở lại Room Screen với cấu hình scene tương ứng để tiếp tục bày trí.
+    * **Nút Tải xuống (Icon download / mũi tên xuống khay)**: Xuất ảnh PNG độ phân giải cao vào thư viện ảnh thiết bị (MediaStore).
+  * **Ô "+"**: Thẻ trống có dấu cộng xanh dương lớn để tạo scene mới.
+  * **Các ô khóa (Premium)**: Thẻ có biểu tượng ổ khóa màu xanh dương lớn.
 
-### 4.6. Màn hình cài đặt (Settings Screen)
-* **Bố cục UI**:
-  * Thiết kế dạng danh sách nhóm card tròn pastel:
-    * **Âm thanh**:
-      * Toggle Bật/Tắt Nhạc nền (BGM).
-      * Toggle Bật/Tắt Hiệu ứng âm thanh (SFX).
-    * **Ngôn ngữ**: Tiếng Việt / English (lưu vào DataStore/UserDefaults).
-    * **Dữ liệu**: Nút "Xóa toàn bộ dữ liệu & Reset về ban đầu" (yêu cầu xác nhận 2 bước).
-    * **Thông tin**: Phiên bản ứng dụng, Điều khoản sử dụng, Chính sách quyền riêng tư (Privacy Policy).
+### 4.5. Màn hình Cửa hàng mô phỏng (Shop Stub Modal)
+* Modal/Dialog xuất hiện khi người chơi nhấn vào nút Shop tại Home, slot doll bị khóa, hoặc pack bị khóa trong Editor.
+* Giới thiệu gói mở khóa toàn bộ Packs (All-In-One Pack, Halloween Pack, Princess Pack...) với nút "Unlock (Demo)" để mở khóa thử nghiệm.
+
+### 4.6. Màn hình Cài đặt (Settings Screen)
+* Bật/Tắt âm thanh, thông tin phiên bản.
 
 ---
 
 ## 5. BẢN ĐỒ DỮ LIỆU & NGUYÊN TẮC QUẢN LÝ (DATA ARCHITECTURE OVERVIEW)
 Chi tiết cấu trúc JSON và bảng Database được quy định riêng tại `docs/DATA_MODEL.md`.
-* `catalog.json` là nguồn dữ liệu chân lý duy nhất (Single Source of Truth) cho toàn bộ item trang phục, không phụ thuộc hệ điều hành.
-* Trạng thái búp bê được lưu dưới dạng danh sách ID vật phẩm đã chọn kèm mã màu tint (HEX string). Không lưu trực tiếp file ảnh bitmap nặng vào SQLite, chỉ lưu cấu hình JSON/Entity nhẹ. Khi cần hiển thị hoặc render xuất ảnh PNG, engine sẽ lấy catalog tương ứng và vẽ xếp lớp.
-* Room (Android) và SwiftData (iOS) lưu trữ danh sách búp bê và khung cảnh theo cấu trúc model tương đương nhau.
+
+### 5.1. Mô hình dữ liệu cốt lõi
+1. **CharacterSlot**:
+   * `id`: Chuỗi định danh duy nhất của slot (`slot_1`, `slot_2`,...).
+   * `characterState`: Đối tượng trạng thái cấu hình của búp bê (body, mắt, tóc, quần áo, mã màu hue,...).
+   * `thumbnailPath`: Đường dẫn file ảnh chân dung lưu trữ phục vụ hiển thị trên slot.
+   * `isLocked`: Trạng thái khóa premium (tối đa 4 slot miễn phí, các slot sau bị khóa).
+2. **Room**:
+   * `wallId`: Mã hoa văn tường hiện tại (mặc định: `wall_halloween_01`).
+   * `floorId`: Mã sàn phòng hiện tại (mặc định: `floor_wood_01`).
+   * `furniture`: Danh sách vật phẩm nội thất đã đặt trong phòng `{ itemId, x, y, scale }`.
+   * `placedCharacters`: Danh sách búp bê đang đứng trong phòng `{ slotId, x, y, scale }`. Hỗ trợ kéo thả (x, y) trên Room Stage.
+3. **SavedScene**:
+   * `id`: Định danh bản lưu ảnh phòng.
+   * `roomJson`: Chuỗi JSON lưu toàn bộ trạng thái Room tại thời điểm chụp.
+   * `imagePath`: Đường dẫn file ảnh chụp preview của căn phòng.
+   * `createdAt`: Thời gian chụp.
+
+### 5.2. Catalog & Assets
+* `catalog.json` là nguồn dữ liệu chân lý duy nhất (Single Source of Truth) cho toàn bộ item:
+  * Bổ sung các category phòng: `wall`, `floor`, `bed`, `sofa`, `table`.
+  * Bổ sung trường `packId`: `basic`, `halloween`, `princess`, `winter`, `kpop`, `jewelry`.
+  * Bổ sung cờ `isPremium` theo pack tương ứng.
+* Trạng thái búp bê được lưu dưới dạng danh sách ID vật phẩm đã chọn kèm mã màu tint (HEX string).
+* **Cơ chế Fallback & Logging bắt buộc**:
+  * Khi mở ứng dụng lần đầu: Luôn tạo sẵn 1 búp bê mặc định hoàn chỉnh (body + mặt + mắt + miệng + tóc + đồ lót) ở slot 1 và búp bê này phải đứng trong Room.
+  * Logging: Ghi log chi tiết số item đọc từ `catalog.json` theo từng category, số layer đang vẽ, và các item thiếu file ảnh.
+  * Fallback Renderer: Tự động vẽ placeholder chuẩn vector/canvas tỉ lệ 1024x1536 khi thiếu artwork file, đảm bảo búp bê luôn luôn hiển thị trực quan.

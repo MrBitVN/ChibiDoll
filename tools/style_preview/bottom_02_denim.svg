@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="bottom_denim">
+    <!-- Main Shorts Body (Indigo blue) -->
+    <path d="M 400 885
+             C 455 895 569 895 624 885
+             C 634 945 634 990 629 1015
+             L 525 1015 L 512 980 L 499 1015
+             L 395 1015
+             C 390 990 390 945 400 885 Z"
+          fill="#2563EB" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+
+    <!-- Front Fly Seam & Crotch Stitch -->
+    <path d="M 512 895 L 512 955 C 500 965 500 975 512 980" fill="none" stroke="#F59E0B" stroke-width="4.5"/>
+
+    <!-- Curved Front Pockets with Copper Rivets -->
+    <path d="M 405 910 C 440 915 455 945 445 975" fill="none" stroke="#F59E0B" stroke-width="4" stroke-dasharray="6,4"/>
+    <circle cx="448" cy="940" r="4.5" fill="#F59E0B" stroke="#2D1810" stroke-width="2"/>
+
+    <path d="M 619 910 C 584 915 569 945 579 975" fill="none" stroke="#F59E0B" stroke-width="4" stroke-dasharray="6,4"/>
+    <circle cx="576" cy="940" r="4.5" fill="#F59E0B" stroke="#2D1810" stroke-width="2"/>
+
+    <!-- Rolled Cuffs at Thigh Hem -->
+    <!-- Left Leg Cuff -->
+    <rect x="392" y="1000" width="112" height="24" rx="8" fill="#93C5FD" stroke="#2D1810" stroke-width="6"/>
+    <!-- Right Leg Cuff -->
+    <rect x="520" y="1000" width="112" height="24" rx="8" fill="#93C5FD" stroke="#2D1810" stroke-width="6"/>
+  </g>
+</svg>

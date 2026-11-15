@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="hair_wavy_bob">
+    <!-- Back Volume & Inward-Curling Waves around Jawline -->
+    <path d="M 330 450
+             C 275 470 265 590 315 670
+             C 335 700 365 690 355 650
+             C 335 580 340 510 365 460
+             C 415 400 585 390 665 460
+             C 690 510 695 580 675 650
+             C 665 690 695 700 715 670
+             C 765 590 755 470 704 450
+             C 690 340 640 260 512 260
+             C 384 260 334 340 330 450 Z"
+          fill="#5C3A21" stroke="#2D1810" stroke-width="7.5" stroke-linejoin="round"/>
+
+    <!-- Side-swept dynamic bangs across forehead -->
+    <path d="M 345 405 C 405 435 485 485 555 475 C 615 465 665 425 685 395"
+          fill="none" stroke="#2D1810" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 375 385 C 445 425 525 460 575 445"
+          fill="none" stroke="#2D1810" stroke-width="4.5" stroke-linecap="round"/>
+
+    <!-- Cute Gold Star Hairpin on right temple -->
+    <path d="M 640 380 L 646 395 L 662 396 L 649 406 L 654 421 L 640 411 L 626 421 L 631 406 L 618 396 L 634 395 Z"
+          fill="#F59E0B" stroke="#2D1810" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+</svg>

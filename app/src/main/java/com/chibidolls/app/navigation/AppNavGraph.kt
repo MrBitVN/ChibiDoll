@@ -7,10 +7,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.chibidolls.app.features.collection.CollectionScreen
+import com.chibidolls.app.features.album.AlbumScreen
 import com.chibidolls.app.features.editor.CharacterEditorScreen
 import com.chibidolls.app.features.home.HomeScreen
-import com.chibidolls.app.features.scene.SceneEditorScreen
+import com.chibidolls.app.features.room.RoomScreen
 import com.chibidolls.app.features.settings.SettingsScreen
 import com.chibidolls.app.features.splash.SplashScreen
 
@@ -36,17 +36,8 @@ fun AppNavGraph(
 
         composable(Screen.Home.route) {
             HomeScreen(
-                onCreateDollClick = {
-                    navController.navigate(Screen.CharacterEditor.createRoute())
-                },
-                onSceneStudioClick = {
-                    navController.navigate(Screen.SceneEditor.createRoute())
-                },
-                onCollectionClick = {
-                    navController.navigate(Screen.Collection.route)
-                },
-                onRandomClick = {
-                    navController.navigate(Screen.CharacterEditor.createRoute())
+                onPlayClick = {
+                    navController.navigate(Screen.Room.route)
                 },
                 onSettingsClick = {
                     navController.navigate(Screen.Settings.route)
@@ -54,9 +45,28 @@ fun AppNavGraph(
             )
         }
 
+        composable(Screen.Room.route) {
+            RoomScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onAlbumClick = {
+                    navController.navigate(Screen.Album.route)
+                },
+                onOpenEditorForSlot = { slotIndex, characterId ->
+                    navController.navigate(Screen.CharacterEditor.createRoute(slotIndex, characterId))
+                }
+            )
+        }
+
         composable(
             route = Screen.CharacterEditor.route,
             arguments = listOf(
+                navArgument("slotIndex") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = "0"
+                },
                 navArgument("characterId") {
                     type = NavType.StringType
                     nullable = true
@@ -67,36 +77,17 @@ fun AppNavGraph(
             CharacterEditorScreen(
                 onBackClick = { navController.popBackStack() },
                 onSaveSuccess = {
-                    navController.navigate(Screen.Collection.route) {
-                        popUpTo(Screen.Home.route)
-                    }
+                    navController.popBackStack()
                 }
             )
         }
 
-        composable(
-            route = Screen.SceneEditor.route,
-            arguments = listOf(
-                navArgument("sceneId") {
-                    type = NavType.StringType
-                    nullable = true
-                    defaultValue = null
-                }
-            )
-        ) {
-            SceneEditorScreen(
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
-        composable(Screen.Collection.route) {
-            CollectionScreen(
+        composable(Screen.Album.route) {
+            AlbumScreen(
                 onBackClick = { navController.popBackStack() },
-                onDollClick = { dollId ->
-                    navController.navigate(Screen.CharacterEditor.createRoute(dollId))
-                },
-                onAddNewClick = {
-                    navController.navigate(Screen.CharacterEditor.createRoute())
+                onTakePhotoClick = { navController.popBackStack() },
+                onEditPhotoClick = { photo ->
+                    navController.navigate(Screen.CharacterEditor.createRoute(0, null))
                 }
             )
         }

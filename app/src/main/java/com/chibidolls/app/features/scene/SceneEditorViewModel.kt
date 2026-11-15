@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chibidolls.app.core.audio.CuteSound
+import com.chibidolls.app.core.audio.CuteSoundManager
 import com.chibidolls.app.core.logic.CharacterLogicHelper
 import com.chibidolls.app.core.logic.SceneEditorLogicHelper
 import com.chibidolls.app.core.logic.SceneImageExporter
@@ -49,6 +51,7 @@ class SceneEditorViewModel @Inject constructor(
     private val characterRepository: CharacterRepository,
     private val catalogRepository: CatalogRepository,
     private val appSettingsRepository: AppSettingsRepository,
+    private val soundManager: CuteSoundManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -154,6 +157,7 @@ class SceneEditorViewModel @Inject constructor(
     }
 
     fun addDoll(character: Character) {
+        soundManager.playSound(CuteSound.POP)
         _uiState.update { state ->
             val (updatedScene, newItem) = SceneEditorLogicHelper.addItem(
                 scene = state.scene,
@@ -191,6 +195,7 @@ class SceneEditorViewModel @Inject constructor(
     }
 
     fun addProp(itemType: SceneItemType, itemId: String) {
+        soundManager.playSound(CuteSound.POP)
         _uiState.update { state ->
             val (updatedScene, newItem) = SceneEditorLogicHelper.addItem(
                 scene = state.scene,
@@ -290,6 +295,7 @@ class SceneEditorViewModel @Inject constructor(
                 updatedAt = System.currentTimeMillis()
             )
             sceneRepository.saveScene(toSave)
+            soundManager.playSound(CuteSound.SUCCESS)
 
             _uiState.update {
                 it.copy(

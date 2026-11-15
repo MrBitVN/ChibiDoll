@@ -16,6 +16,8 @@ data class Character(
     @SerializedName("createdAt") val createdAt: Long = System.currentTimeMillis(),
     @SerializedName("updatedAt") val updatedAt: Long = System.currentTimeMillis(),
     @SerializedName("previewImagePath") val previewImagePath: String? = null,
+    @SerializedName("tags") val tags: List<String> = emptyList(),
+    @SerializedName("bio") val bio: String? = null,
     @SerializedName("slots") val slots: Map<String, OutfitSlot> = emptyMap()
 ) {
     /**

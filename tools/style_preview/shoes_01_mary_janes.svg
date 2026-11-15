@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="shoes_mary_janes">
+    <!-- LEFT FOOT SHOE & SOCK -->
+    <!-- White Frill Ankle Sock -->
+    <path d="M 395 1215 C 420 1225 455 1225 475 1215 L 478 1240 C 455 1250 420 1250 395 1240 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 390 1215 C 400 1210 410 1210 420 1215 C 430 1210 440 1210 450 1215 C 460 1210 470 1210 480 1215"
+          fill="none" stroke="#FB7185" stroke-width="3"/>
+
+    <!-- Glossy Pink Mary Jane Shoe -->
+    <path d="M 380 1240
+             C 360 1240 355 1280 395 1288
+             C 440 1295 475 1290 485 1260
+             C 485 1240 435 1235 380 1240 Z"
+          fill="#FB7185" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Instep Strap & Bow -->
+    <path d="M 385 1248 C 420 1255 465 1252 480 1248" fill="none" stroke="#E11D48" stroke-width="5"/>
+    <circle cx="430" cy="1251" r="5" fill="#E11D48"/>
+    <!-- Shoe Sole Bottom Line -->
+    <path d="M 360 1280 C 400 1295 460 1295 485 1275" fill="none" stroke="#2D1810" stroke-width="6" stroke-linecap="round"/>
+    <!-- Glossy Specular Reflection -->
+    <ellipse cx="380" cy="1260" rx="10" ry="5" fill="#FFFFFF" opacity="0.6"/>
+
+    <!-- RIGHT FOOT SHOE & SOCK -->
+    <!-- White Frill Ankle Sock -->
+    <path d="M 549 1215 C 574 1225 609 1225 629 1215 L 632 1240 C 609 1250 574 1250 549 1240 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 544 1215 C 554 1210 564 1210 574 1215 C 584 1210 594 1210 604 1215 C 614 1210 624 1210 634 1215"
+          fill="none" stroke="#FB7185" stroke-width="3"/>
+
+    <!-- Glossy Pink Mary Jane Shoe -->
+    <path d="M 544 1240
+             C 524 1240 519 1280 559 1288
+             C 604 1295 639 1290 649 1260
+             C 649 1240 599 1235 544 1240 Z"
+          fill="#FB7185" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- Instep Strap & Bow -->
+    <path d="M 549 1248 C 584 1255 629 1252 644 1248" fill="none" stroke="#E11D48" stroke-width="5"/>
+    <circle cx="594" cy="1251" r="5" fill="#E11D48"/>
+    <!-- Shoe Sole Bottom Line -->
+    <path d="M 524 1280 C 564 1295 624 1295 649 1275" fill="none" stroke="#2D1810" stroke-width="6" stroke-linecap="round"/>
+    <!-- Glossy Specular Reflection -->
+    <ellipse cx="544" cy="1260" rx="10" ry="5" fill="#FFFFFF" opacity="0.6"/>
+  </g>
+</svg>

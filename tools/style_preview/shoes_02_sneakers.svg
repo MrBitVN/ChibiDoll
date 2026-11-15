@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" width="1024" height="1536">
+  <g id="shoes_sneakers">
+    <!-- LEFT SNEAKER & SOCK -->
+    <!-- Red & White Striped Sports Sock -->
+    <path d="M 395 1175 L 475 1175 L 478 1230 L 392 1230 Z" fill="#FFFFFF" stroke="#2D1810" stroke-width="6"/>
+    <path d="M 394 1190 L 476 1190" fill="none" stroke="#E11D48" stroke-width="6"/>
+    <path d="M 393 1210 L 477 1210" fill="none" stroke="#E11D48" stroke-width="6"/>
+
+    <!-- High-top Blue Upper Body -->
+    <path d="M 380 1225
+             C 360 1235 350 1275 390 1285
+             C 435 1295 480 1290 490 1260
+             L 485 1225 Z"
+          fill="#2563EB" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- White Curved Rubber Toe Cap -->
+    <path d="M 355 1260 C 350 1280 375 1288 400 1288 C 390 1270 380 1260 370 1260 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="5"/>
+    <!-- Laces & Eyelets -->
+    <path d="M 405 1235 L 435 1245 M 410 1248 L 440 1258" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- White Thick Rubber Sole -->
+    <path d="M 355 1280 C 400 1295 460 1295 490 1275 L 490 1288 C 460 1302 400 1302 355 1288 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="6"/>
+
+    <!-- RIGHT SNEAKER & SOCK -->
+    <!-- Red & White Striped Sports Sock -->
+    <path d="M 549 1175 L 629 1175 L 632 1230 L 546 1230 Z" fill="#FFFFFF" stroke="#2D1810" stroke-width="6"/>
+    <path d="M 548 1190 L 630 1190" fill="none" stroke="#E11D48" stroke-width="6"/>
+    <path d="M 547 1210 L 631 1210" fill="none" stroke="#E11D48" stroke-width="6"/>
+
+    <!-- High-top Blue Upper Body -->
+    <path d="M 534 1225
+             C 514 1235 504 1275 544 1285
+             C 589 1295 634 1290 644 1260
+             L 639 1225 Z"
+          fill="#2563EB" stroke="#2D1810" stroke-width="7" stroke-linejoin="round"/>
+    <!-- White Curved Rubber Toe Cap -->
+    <path d="M 509 1260 C 504 1280 529 1288 554 1288 C 544 1270 534 1260 524 1260 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="5"/>
+    <!-- Laces & Eyelets -->
+    <path d="M 559 1235 L 589 1245 M 564 1248 L 594 1258" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- White Thick Rubber Sole -->
+    <path d="M 509 1280 C 554 1295 614 1295 644 1275 L 644 1288 C 614 1302 554 1302 509 1288 Z"
+          fill="#FFFFFF" stroke="#2D1810" stroke-width="6"/>
+  </g>
+</svg>
