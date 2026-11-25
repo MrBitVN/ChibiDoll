@@ -1,0 +1,320 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		16148D9F451744968A76A5F4 /* ChibiDollApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C205F9EDE9C416BA6EC5723 /* ChibiDollApp.swift */; };
+		AE81E3734CC644778D23C62E /* CatalogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C079B95EDA4E5FB4D94503 /* CatalogModel.swift */; };
+		CCC3B1880EC540CDB55BD440 /* CharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A468CA4EB345D8B0231E83 /* CharacterModel.swift */; };
+		81ECA140E3F84AEFB85C06C2 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C9C47BFBE94E34901007E5 /* RoomModel.swift */; };
+		BF20DBA3CCB549559E249423 /* SkinTonePalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D028AE972734DBB8183C863 /* SkinTonePalette.swift */; };
+		D19590806F14451AB6BE43A5 /* CatalogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDD82027877491784F380DE /* CatalogRepository.swift */; };
+		61ECF4126AA2477084DCA355 /* CharacterLogicHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7A820F7F724AF6AFADF5E5 /* CharacterLogicHelper.swift */; };
+		85EA667178834792875047EE /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046DB94F4CC74996A0242B59 /* ImageCacheManager.swift */; };
+		377A6D0A526F44048888A453 /* RoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDA4DC83F924AF7AE3F6436 /* RoomRepository.swift */; };
+		22048DF6410B41ADB1F9F98F /* CuteSoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4060F808A1E43378954AAA9 /* CuteSoundManager.swift */; };
+		B12C82C046CD403C9B09C73B /* ChibiDollRendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409908F037D744CC908F500C /* ChibiDollRendererView.swift */; };
+		8548273C2BFE442AB6C930C0 /* EditorStudioBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE25497E49440F3B9988594 /* EditorStudioBackgroundView.swift */; };
+		6939F477871F48B784B0EA79 /* PackTabsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359D22878EA74133B7679886 /* PackTabsBarView.swift */; };
+		5D3D241E173B4B41B46A2C98 /* CategoryTabsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382CAA410A874F57A159E82E /* CategoryTabsBarView.swift */; };
+		CBBB8E28D5BA451094AD061F /* ItemGridPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B56929FEC24142B417A63A /* ItemGridPanelView.swift */; };
+		B6EAA78734B74F6493B42E2B /* SkinToneSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F691E9639FE450EB7CB11E4 /* SkinToneSliderView.swift */; };
+		F16F3A8E7DAD432685C5F62F /* RoomStageCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5DE3D8D76E4896B00C7F86 /* RoomStageCanvasView.swift */; };
+		F8FFA2F6C1A04496B597D69E /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EE996FE94842E882823DDA /* HomeScreen.swift */; };
+		6AF6281FC4AF4D8DBE60FC37 /* RoomScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E212FE6447494C896E1F89 /* RoomScreen.swift */; };
+		83B322B20AD5466CBCF201D2 /* CharacterEditorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A736D660924D8EABF3AE85 /* CharacterEditorScreen.swift */; };
+		9F16F982B876441E9953B801 /* AlbumScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E24E0D37514357BE20FF7E /* AlbumScreen.swift */; };
+		92FA14E5AD5F4D5BB380FC48 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A37B6FF95744670B95BD026 /* SettingsScreen.swift */; };
+		84F3255FAEF445B6883AE073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 264E307558BD4884B7AE1822 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6C205F9EDE9C416BA6EC5723 /* ChibiDollApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ChibiDollApp.swift"; path = "ChibiDoll/App/ChibiDollApp.swift"; sourceTree = "<group>"; };
+		23C079B95EDA4E5FB4D94503 /* CatalogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CatalogModel.swift"; path = "ChibiDoll/Models/CatalogModel.swift"; sourceTree = "<group>"; };
+		C2A468CA4EB345D8B0231E83 /* CharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CharacterModel.swift"; path = "ChibiDoll/Models/CharacterModel.swift"; sourceTree = "<group>"; };
+		C0C9C47BFBE94E34901007E5 /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoomModel.swift"; path = "ChibiDoll/Models/RoomModel.swift"; sourceTree = "<group>"; };
+		1D028AE972734DBB8183C863 /* SkinTonePalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SkinTonePalette.swift"; path = "ChibiDoll/Services/SkinTonePalette.swift"; sourceTree = "<group>"; };
+		CDDD82027877491784F380DE /* CatalogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CatalogRepository.swift"; path = "ChibiDoll/Services/CatalogRepository.swift"; sourceTree = "<group>"; };
+		7D7A820F7F724AF6AFADF5E5 /* CharacterLogicHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CharacterLogicHelper.swift"; path = "ChibiDoll/Services/CharacterLogicHelper.swift"; sourceTree = "<group>"; };
+		046DB94F4CC74996A0242B59 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ImageCacheManager.swift"; path = "ChibiDoll/Services/ImageCacheManager.swift"; sourceTree = "<group>"; };
+		FBDA4DC83F924AF7AE3F6436 /* RoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoomRepository.swift"; path = "ChibiDoll/Services/RoomRepository.swift"; sourceTree = "<group>"; };
+		D4060F808A1E43378954AAA9 /* CuteSoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CuteSoundManager.swift"; path = "ChibiDoll/Services/CuteSoundManager.swift"; sourceTree = "<group>"; };
+		409908F037D744CC908F500C /* ChibiDollRendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ChibiDollRendererView.swift"; path = "ChibiDoll/Views/Components/ChibiDollRendererView.swift"; sourceTree = "<group>"; };
+		BEE25497E49440F3B9988594 /* EditorStudioBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EditorStudioBackgroundView.swift"; path = "ChibiDoll/Views/Components/EditorStudioBackgroundView.swift"; sourceTree = "<group>"; };
+		359D22878EA74133B7679886 /* PackTabsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PackTabsBarView.swift"; path = "ChibiDoll/Views/Components/PackTabsBarView.swift"; sourceTree = "<group>"; };
+		382CAA410A874F57A159E82E /* CategoryTabsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CategoryTabsBarView.swift"; path = "ChibiDoll/Views/Components/CategoryTabsBarView.swift"; sourceTree = "<group>"; };
+		C4B56929FEC24142B417A63A /* ItemGridPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemGridPanelView.swift"; path = "ChibiDoll/Views/Components/ItemGridPanelView.swift"; sourceTree = "<group>"; };
+		2F691E9639FE450EB7CB11E4 /* SkinToneSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SkinToneSliderView.swift"; path = "ChibiDoll/Views/Components/SkinToneSliderView.swift"; sourceTree = "<group>"; };
+		FB5DE3D8D76E4896B00C7F86 /* RoomStageCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoomStageCanvasView.swift"; path = "ChibiDoll/Views/Components/RoomStageCanvasView.swift"; sourceTree = "<group>"; };
+		E4EE996FE94842E882823DDA /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "HomeScreen.swift"; path = "ChibiDoll/Views/Home/HomeScreen.swift"; sourceTree = "<group>"; };
+		03E212FE6447494C896E1F89 /* RoomScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoomScreen.swift"; path = "ChibiDoll/Views/Room/RoomScreen.swift"; sourceTree = "<group>"; };
+		22A736D660924D8EABF3AE85 /* CharacterEditorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CharacterEditorScreen.swift"; path = "ChibiDoll/Views/Editor/CharacterEditorScreen.swift"; sourceTree = "<group>"; };
+		66E24E0D37514357BE20FF7E /* AlbumScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AlbumScreen.swift"; path = "ChibiDoll/Views/Album/AlbumScreen.swift"; sourceTree = "<group>"; };
+		7A37B6FF95744670B95BD026 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SettingsScreen.swift"; path = "ChibiDoll/Views/Settings/SettingsScreen.swift"; sourceTree = "<group>"; };
+		264E307558BD4884B7AE1822 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Assets.xcassets"; path = "ChibiDoll/Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		14C72C19DF8A439C8875F560 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info.plist"; path = "ChibiDoll/Resources/Info.plist"; sourceTree = "<group>"; };
+		EF48B439373E451493986FB2 /* ChibiDoll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChibiDoll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43D99C8AB43842A99201A271 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C7EC25088AB44FF8D33238F = {
+			isa = PBXGroup;
+			children = (
+				B68EF04FE2E2433493D0B666 /* ChibiDoll */,
+				BBB0809498304CD9936D0EF8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B68EF04FE2E2433493D0B666 /* ChibiDoll */ = {
+			isa = PBXGroup;
+			children = (
+				6C205F9EDE9C416BA6EC5723 /* ChibiDollApp.swift */,
+				23C079B95EDA4E5FB4D94503 /* CatalogModel.swift */,
+				C2A468CA4EB345D8B0231E83 /* CharacterModel.swift */,
+				C0C9C47BFBE94E34901007E5 /* RoomModel.swift */,
+				1D028AE972734DBB8183C863 /* SkinTonePalette.swift */,
+				CDDD82027877491784F380DE /* CatalogRepository.swift */,
+				7D7A820F7F724AF6AFADF5E5 /* CharacterLogicHelper.swift */,
+				046DB94F4CC74996A0242B59 /* ImageCacheManager.swift */,
+				FBDA4DC83F924AF7AE3F6436 /* RoomRepository.swift */,
+				D4060F808A1E43378954AAA9 /* CuteSoundManager.swift */,
+				409908F037D744CC908F500C /* ChibiDollRendererView.swift */,
+				BEE25497E49440F3B9988594 /* EditorStudioBackgroundView.swift */,
+				359D22878EA74133B7679886 /* PackTabsBarView.swift */,
+				382CAA410A874F57A159E82E /* CategoryTabsBarView.swift */,
+				C4B56929FEC24142B417A63A /* ItemGridPanelView.swift */,
+				2F691E9639FE450EB7CB11E4 /* SkinToneSliderView.swift */,
+				FB5DE3D8D76E4896B00C7F86 /* RoomStageCanvasView.swift */,
+				E4EE996FE94842E882823DDA /* HomeScreen.swift */,
+				03E212FE6447494C896E1F89 /* RoomScreen.swift */,
+				22A736D660924D8EABF3AE85 /* CharacterEditorScreen.swift */,
+				66E24E0D37514357BE20FF7E /* AlbumScreen.swift */,
+				7A37B6FF95744670B95BD026 /* SettingsScreen.swift */,
+				264E307558BD4884B7AE1822 /* Assets.xcassets */,
+				14C72C19DF8A439C8875F560 /* Info.plist */,
+			);
+			name = ChibiDoll;
+			sourceTree = "<group>";
+		};
+		BBB0809498304CD9936D0EF8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF48B439373E451493986FB2 /* ChibiDoll.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		397A2843032A48D398177D7C /* ChibiDoll */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A8F24C947074DA28C4A62EC /* Build configuration list for PBXNativeTarget "ChibiDoll" */;
+			buildPhases = (
+				03EBF9E6A175432C916E0296 /* Sources */,
+				43D99C8AB43842A99201A271 /* Frameworks */,
+				CE634D66A9C74E01AE129FFF /* Resources */,
+				EB83A0C791884CDCABF0B1B6 /* Copy Shared Assets */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChibiDoll;
+			productName = ChibiDoll;
+			productReference = EF48B439373E451493986FB2 /* ChibiDoll.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		13DD72DA733B4AC89305A4CB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 545466DB46A54A3695FFD3D8 /* Build configuration list for PBXProject "ChibiDoll" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0C7EC25088AB44FF8D33238F;
+			productRefGroup = BBB0809498304CD9936D0EF8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				397A2843032A48D398177D7C /* ChibiDoll */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CE634D66A9C74E01AE129FFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84F3255FAEF445B6883AE073 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EB83A0C791884CDCABF0B1B6 /* Copy Shared Assets */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Shared Assets";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ASSETS_SRC=\"${SRCROOT}/../app/src/main/assets\"\nBUNDLE_DST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\nif [ -d \"$ASSETS_SRC\" ]; then\n  echo \"Copying ChibiDoll assets into $BUNDLE_DST\"\n  mkdir -p \"$BUNDLE_DST\"\n  cp -R \"$ASSETS_SRC/\"* \"$BUNDLE_DST/\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03EBF9E6A175432C916E0296 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16148D9F451744968A76A5F4 /* ChibiDollApp.swift in Sources */,
+				AE81E3734CC644778D23C62E /* CatalogModel.swift in Sources */,
+				CCC3B1880EC540CDB55BD440 /* CharacterModel.swift in Sources */,
+				81ECA140E3F84AEFB85C06C2 /* RoomModel.swift in Sources */,
+				BF20DBA3CCB549559E249423 /* SkinTonePalette.swift in Sources */,
+				D19590806F14451AB6BE43A5 /* CatalogRepository.swift in Sources */,
+				61ECF4126AA2477084DCA355 /* CharacterLogicHelper.swift in Sources */,
+				85EA667178834792875047EE /* ImageCacheManager.swift in Sources */,
+				377A6D0A526F44048888A453 /* RoomRepository.swift in Sources */,
+				22048DF6410B41ADB1F9F98F /* CuteSoundManager.swift in Sources */,
+				B12C82C046CD403C9B09C73B /* ChibiDollRendererView.swift in Sources */,
+				8548273C2BFE442AB6C930C0 /* EditorStudioBackgroundView.swift in Sources */,
+				6939F477871F48B784B0EA79 /* PackTabsBarView.swift in Sources */,
+				5D3D241E173B4B41B46A2C98 /* CategoryTabsBarView.swift in Sources */,
+				CBBB8E28D5BA451094AD061F /* ItemGridPanelView.swift in Sources */,
+				B6EAA78734B74F6493B42E2B /* SkinToneSliderView.swift in Sources */,
+				F16F3A8E7DAD432685C5F62F /* RoomStageCanvasView.swift in Sources */,
+				F8FFA2F6C1A04496B597D69E /* HomeScreen.swift in Sources */,
+				6AF6281FC4AF4D8DBE60FC37 /* RoomScreen.swift in Sources */,
+				83B322B20AD5466CBCF201D2 /* CharacterEditorScreen.swift in Sources */,
+				9F16F982B876441E9953B801 /* AlbumScreen.swift in Sources */,
+				92FA14E5AD5F4D5BB380FC48 /* SettingsScreen.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		057F70AA5DE8448D9EBE0963 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		61BEC430786743AE8EABFCCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FC9228AC92064E8B90782977 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChibiDoll/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chibidolls.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D66B2B7688944D6FBD3330A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ChibiDoll/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chibidolls.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		545466DB46A54A3695FFD3D8 /* Build configuration list for PBXProject "ChibiDoll" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				057F70AA5DE8448D9EBE0963 /* Debug */,
+				61BEC430786743AE8EABFCCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A8F24C947074DA28C4A62EC /* Build configuration list for PBXNativeTarget "ChibiDoll" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC9228AC92064E8B90782977 /* Debug */,
+				D66B2B7688944D6FBD3330A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 13DD72DA733B4AC89305A4CB /* Project object */;
+}
